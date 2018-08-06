@@ -8,10 +8,10 @@ import getWeb3 from './util/web3/getWeb3'
 
 // Layouts
 import App from './App'
-import Home from './layouts/home/Home'
-import Dashboard from './layouts/dashboard/Dashboard'
-import SignUp from './user/layouts/signup/SignUp'
-import Profile from './user/layouts/profile/Profile'
+import Home from './layouts/Home'
+import Dashboard from './layouts/Dashboard'
+import SignUp from './layouts/SignUp'
+import Profile from './layouts/Profile'
 
 // Redux Store
 import store from './store'
