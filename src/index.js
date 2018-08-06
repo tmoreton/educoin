@@ -5,7 +5,6 @@ import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import { UserIsAuthenticated, UserIsNotAuthenticated } from './util/wrappers.js'
 import getWeb3 from './util/getWeb3'
-import ipfs from './util/ipfs'
 
 // Layouts
 import App from './App'

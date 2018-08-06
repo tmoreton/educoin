@@ -8,7 +8,7 @@ import LogoutButtonContainer from './components/logoutbutton/LogoutButtonContain
 
 // Styles
 import './styles.css'
-import store from './store'
+
 class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>

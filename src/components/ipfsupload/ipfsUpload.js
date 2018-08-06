@@ -9,7 +9,6 @@ class ipfsUpload extends Component {
   }
 
   captureFile = (event) => {
-    event.stopPropagation()
     event.preventDefault()
     const file = event.target.files[0]
     let reader = new window.FileReader()
@@ -32,7 +31,7 @@ class ipfsUpload extends Component {
   render() {
     return(
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <input type="file" onChange = {this.captureFile} />
+        <input type="file" onChange={this.captureFile} />
         <button type="submit">Submit</button>
       </form>
     )
