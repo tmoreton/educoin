@@ -1,10 +1,17 @@
-import AuthenticationContract from '../../../../build/contracts/Authentication.json'
-import { loginUser } from '../loginbutton/LoginButtonActions'
-import store from '../../../store'
+import AuthenticationContract from '../../../build/contracts/Authentication.json'
+import store from '../../store'
 
 const contract = require('truffle-contract')
 
-export function signUpUser(name) {
+export const USER_UPDATED = 'USER_UPDATED'
+function userUpdated(user) {
+  return {
+    type: USER_UPDATED,
+    payload: user
+  }
+}
+
+export function updateUser(name) {
   let web3 = store.getState().web3.web3Instance
 
   // Double-check web3's status.
@@ -28,11 +35,14 @@ export function signUpUser(name) {
         authentication.deployed().then(function(instance) {
           authenticationInstance = instance
 
-          // Attempt to sign up user.
-          authenticationInstance.signup(name, {from: coinbase})
+          // Attempt to login user.
+          authenticationInstance.update(name, {from: coinbase})
           .then(function(result) {
-            // If no error, login user.
-            return dispatch(loginUser())
+            // If no error, update user.
+
+            dispatch(userUpdated({"name": name}))
+
+            return alert('Name updated!')
           })
           .catch(function(result) {
             // If error...

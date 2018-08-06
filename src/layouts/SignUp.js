@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import SignUpFormContainer from '../user/ui/signupform/SignUpFormContainer'
+import SignUpFormContainer from '../components/signupform/SignUpFormContainer'
 
 class SignUp extends Component {
   render() {
@@ -8,7 +8,7 @@ class SignUp extends Component {
         <div className="pure-g">
           <div className="pure-u-1-1">
             <h1>Sign Up</h1>
-            <p>We've got your wallet information, simply input your name and your account is made!</p>
+            <p>We have got your wallet information, simply input your name and your account is made!</p>
             <SignUpFormContainer />
           </div>
         </div>

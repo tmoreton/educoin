@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 // UI Components
-import LoginButtonContainer from './user/ui/loginbutton/LoginButtonContainer'
-import LogoutButtonContainer from './user/ui/logoutbutton/LogoutButtonContainer'
+import LoginButtonContainer from './components/loginbutton/LoginButtonContainer'
+import LogoutButtonContainer from './components/logoutbutton/LogoutButtonContainer'
 
 // Styles
 import './styles.css'

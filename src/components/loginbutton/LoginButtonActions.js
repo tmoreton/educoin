@@ -1,6 +1,6 @@
-import AuthenticationContract from '../../../../build/contracts/Authentication.json'
+import AuthenticationContract from '../../../build/contracts/Authentication.json'
 import { browserHistory } from 'react-router'
-import store from '../../../store'
+import store from '../../store'
 
 const contract = require('truffle-contract')
 
