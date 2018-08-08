@@ -1,14 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { updateUser } from './ProfileFormActions'
+import { getCourses } from '../ipfsupload/ipfsUploadActions'
 
 class ProfileForm extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       name: this.props.name
     }
   }
 
+  componentDidMount() {
+    this.props.dispatch(getCourses())
+  }
+  
   onInputChange(event) {
     this.setState({ name: event.target.value })
   }
@@ -16,29 +22,27 @@ class ProfileForm extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    if (this.state.name.length < 2)
-    {
+    if (this.state.name.length < 2) {
       return alert('Please fill in your name.')
     }
 
-    this.props.onProfileFormSubmit(this.state.name)
+    this.props.dispatch(updateUser(this.state.name))
   }
 
   render() {
     return(
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <fieldset>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
-          <span>This is a required field.</span>
-
-          <br />
-
-          <button type="submit">Update</button>
-        </fieldset>
+        <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
+        <button type="submit">Update</button>
       </form>
     )
   }
 }
 
-export default ProfileForm
+const mapStateToProps = (state, ownProps) => {
+  return {
+    name: state.user.data.name
+  }
+}
+
+export default connect( mapStateToProps )(ProfileForm)

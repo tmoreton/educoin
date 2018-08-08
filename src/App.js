@@ -3,8 +3,8 @@ import { Link } from 'react-router'
 import { HiddenOnlyAuth, VisibleOnlyAuth } from './util/wrappers.js'
 
 // UI Components
-import LoginButtonContainer from './components/loginbutton/LoginButtonContainer'
-import LogoutButtonContainer from './components/logoutbutton/LogoutButtonContainer'
+import LoginButton from './components/loginbutton/LoginButton'
+import LogoutButton from './components/logoutbutton/LogoutButton'
 
 // Styles
 import './styles.css'
@@ -13,23 +13,23 @@ class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <div>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/upload">Upload</Link>
         <Link to="/profile">Profile</Link>
-        <LogoutButtonContainer />
+        <LogoutButton />
       </div>
     )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
       <div>
         <Link to="/signup">Sign Up</Link>
-        <LoginButtonContainer />
+        <LoginButton />
       </div>
     )
 
     return (
       <div>
         <nav className="flex center nav">
-          <Link to="/">Truffle Box</Link>
+          <Link to="/">EduCoin</Link>
           <OnlyGuestLinks />
           <OnlyAuthLinks />
         </nav>

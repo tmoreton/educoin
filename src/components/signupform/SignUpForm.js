@@ -1,12 +1,18 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { signUpUser } from './SignUpFormActions'
+import { loginUser } from '../loginbutton/LoginButtonActions'
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props)
-
     this.state = {
       name: ''
     }
+  }
+
+  componentDidMount() {
+    // this.props.dispatch(loginUser())
   }
 
   onInputChange(event) {
@@ -16,29 +22,25 @@ class SignUpForm extends Component {
   handleSubmit(event) {
     event.preventDefault()
 
-    if (this.state.name.length < 2)
-    {
+    if (this.state.name.length < 2){
       return alert('Please fill in your name.')
     }
 
-    this.props.onSignUpFormSubmit(this.state.name)
+    this.props.dispatch(signUpUser(this.state.name))
   }
 
   render() {
     return(
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <fieldset>
-          <label htmlFor="name">Name</label>
-          <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
-          <span>This is a required field.</span>
-
-          <br />
-
-          <button type="submit">Sign Up</button>
-        </fieldset>
+        <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
+        <button type="submit">Sign Up</button>
       </form>
     )
   }
 }
 
-export default SignUpForm
+const mapStateToProps = (state, ownProps) => {
+  return {}
+}
+
+export default connect( mapStateToProps )(SignUpForm)

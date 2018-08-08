@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import IpfsUploadContainer from '../components/ipfsupload/ipfsUploadContainer'
 
 class Home extends Component {
   render() {
@@ -7,8 +6,7 @@ class Home extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>Good to Go!</h1>
-            <IpfsUploadContainer/>
+            <h1>Home</h1>
           </div>
         </div>
       </main>

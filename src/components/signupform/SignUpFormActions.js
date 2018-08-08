@@ -32,6 +32,7 @@ export function signUpUser(name) {
           authenticationInstance.signup(name, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
+            console.log(result)
             return dispatch(loginUser())
           })
           .catch(function(result) {

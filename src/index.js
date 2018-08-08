@@ -9,7 +9,7 @@ import getWeb3 from './util/getWeb3'
 // Layouts
 import App from './App'
 import Home from './layouts/Home'
-import Dashboard from './layouts/Dashboard'
+import Upload from './layouts/Upload'
 import SignUp from './layouts/SignUp'
 import Profile from './layouts/Profile'
 
@@ -33,7 +33,7 @@ ReactDOM.render((
       <Router history={history}>
         <Route path="/" component={App}>
           <IndexRoute component={Home} />
-          <Route path="dashboard" component={UserIsAuthenticated(Dashboard)} />
+          <Route path="upload" component={UserIsAuthenticated(Upload)} />
           <Route path="signup" component={UserIsNotAuthenticated(SignUp)} />
           <Route path="profile" component={UserIsAuthenticated(Profile)} />
         </Route>

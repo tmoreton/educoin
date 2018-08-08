@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
+import IpfsUpload from '../components/ipfsupload/ipfsUpload'
 
-class Dashboard extends Component {
+class Upload extends Component {
   constructor(props, { authData }) {
     super(props)
     authData = this.props
@@ -11,8 +12,8 @@ class Dashboard extends Component {
       <main className="container">
         <div className="pure-g">
           <div className="pure-u-1-1">
-            <h1>Dashboard</h1>
-            <p><strong>Congratulations {this.props.authData.name}!</strong> If you're seeing this page, you've logged in with your own smart contract successfully.</p>
+            <h1>Upload Videos</h1>
+            <IpfsUpload/>
           </div>
         </div>
       </main>
@@ -20,4 +21,4 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard
+export default Upload
