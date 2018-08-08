@@ -3,7 +3,7 @@ import store from '../../store'
 import ipfs from '../../util/ipfs';
 const contract = require('truffle-contract')
 
-export function addCourse(name, hash) {
+export function addCourse(name, image, video,) {
   let web3 = store.getState().web3.web3Instance
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
@@ -25,12 +25,11 @@ export function addCourse(name, hash) {
         ipfsStorage.deployed().then(function(instance) {
           ipfsInstance = instance
             
-            ipfsInstance.addCourse(name, hash, {from: coinbase})
-            .then(function(result) {
-              // If no error, login user.
-              console.log(result)
-            })
-
+          ipfsInstance.addCourse(name, image, video, {from: coinbase})
+          .then(function(result) {
+            // If no error, login user.
+            console.log(result)
+          })
         })
       })
     }

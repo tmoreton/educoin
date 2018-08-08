@@ -7,46 +7,69 @@ class ipfsUpload extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      file: '',
-      name: '',
+      title: '',
+      image: '',
+      video: ''
     }
   }
 
-  captureFile = (event) => {
+  uploadImage = (event) => {
     event.preventDefault()
     const file = event.target.files[0]
     let reader = new window.FileReader()
     reader.readAsArrayBuffer(file)
-    reader.onloadend = () => this.convertToBuffer(reader)    
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result);
+      ipfs.add(buffer, (err, ipfsHash) => {
+        this.setState({image: ipfsHash[0].hash});
+      })
+    }    
+  };
+
+  uploadVideo = (event) => {
+    event.preventDefault()
+    const file = event.target.files[0]
+    let reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result);
+      ipfs.add(buffer, (err, ipfsHash) => {
+        this.setState({video: ipfsHash[0].hash});
+      })
+    }    
   };
 
   updateName = (event) => {
     event.preventDefault()
-    this.setState({name: event.target.value})
-  };
-
-  convertToBuffer = async(reader) => {
-    //file is converted to a buffer to prepare for uploading to IPFS
-    const buffer = await Buffer.from(reader.result);
-    //set this buffer -using es6 syntax
-    
-    ipfs.add(buffer, (err, ipfsHash) => {
-      this.setState({file: ipfsHash[0].hash});
-    })
+    this.setState({title: event.target.value})
   };
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.dispatch(addCourse(this.state.name, this.state.file))
+    this.props.dispatch(addCourse(this.state.title, this.state.image, this.state.video))
   }
 
   render() {
     return(
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <video src={'https://ipfs.io/ipfs/'+this.state.file} width="320" height="240" controls />
-        <input type="file" onChange={this.captureFile} />
-        <p>{this.state.name}</p>
-        <input type="text" onChange={this.updateName} />
+       
+        <div>
+          <video src={'https://ipfs.io/ipfs/'+this.state.video} width="320" height="240" controls />
+          <label for="course-video">Upload Video</label>
+          <input accept="video/mp4,video/x-m4v,video/*"  type="file" class="course-video" onChange={this.uploadVideo} />
+        </div>
+
+        <div>
+          <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="320" height="240" />
+          <label for="course-image">Upload Thumbnail Image</label>
+          <input accept="image/png, image/jpeg" type="file" class="course-image" onChange={this.uploadImage} />
+        </div>
+
+        <div>
+          <label for="course-title">Choose file to upload</label>
+          <input type="text" class="course-title" onChange={this.updateName} />
+        </div>       
+        
         <button type="submit">Submit</button>
       </form>
     )
