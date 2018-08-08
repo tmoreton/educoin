@@ -10,10 +10,6 @@ class ProfileForm extends Component {
       name: this.props.name
     }
   }
-
-  componentDidMount() {
-    this.props.dispatch(getCourses())
-  }
   
   onInputChange(event) {
     this.setState({ name: event.target.value })

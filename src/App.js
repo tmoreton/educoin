@@ -13,7 +13,7 @@ class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
       <div>
-        <Link to="/upload">Upload</Link>
+        <Link to="/upload">Upload Course</Link>
         <Link to="/profile">Profile</Link>
         <LogoutButton />
       </div>
@@ -21,7 +21,7 @@ class App extends Component {
 
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
       <div>
-        <Link to="/signup">Sign Up</Link>
+        <Link to="/signup">Upload Course</Link>
         <LoginButton />
       </div>
     )

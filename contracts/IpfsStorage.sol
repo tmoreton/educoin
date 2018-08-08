@@ -24,16 +24,18 @@ pragma solidity ^0.4.6;
 
 contract IpfsStorage {
   struct Course {
-    string name;
-    string hash;
+    string title;
+    string image;
+    string video;
     address userAddress;
   }
   Course[] public courses;
 
-  function addCourse(string _name, string _hash) public returns(uint) {
+  function addCourse(string _title, string _image, string _video) public returns(uint) {
     courses.length++;
-    courses[courses.length-1].name = _name;
-    courses[courses.length-1].hash = _hash;
+    courses[courses.length-1].title = _title;
+    courses[courses.length-1].image = _image;
+    courses[courses.length-1].video = _video;
     courses[courses.length-1].userAddress = msg.sender;
     return courses.length;
   }
@@ -42,7 +44,7 @@ contract IpfsStorage {
     return courses.length;
   }
 
-  function getCourse(uint index) public constant returns( string, string, address) {
-    return ( courses[index].name, courses[index].hash, courses[index].userAddress );
+  function getCourse(uint index) public constant returns( string, string, string, address) {
+    return ( courses[index].title, courses[index].image, courses[index].video, courses[index].userAddress );
   }
 }

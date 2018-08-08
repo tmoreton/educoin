@@ -48,7 +48,7 @@ export function addCourse(name, image, video,) {
 }
 
 
-export function getCourses() {
+export function getCourses(courses) {
   let web3 = store.getState().web3.web3Instance
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
@@ -76,7 +76,14 @@ export function getCourses() {
             for (var i = 0; i<result.toNumber(); i++) {
               ipfsInstance.getCourse(i, {from: coinbase}).then(function(hash) {
                 // If no error, login user.
-                dispatch(showCourses(hash))
+                var course = {
+                  title: hash[0],
+                  image: hash[1],
+                  video: hash[2],
+                  userAddress: hash[3]
+                }
+                
+                dispatch(showCourses([course]))
               })
             }
             

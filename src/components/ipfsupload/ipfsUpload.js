@@ -52,23 +52,23 @@ class ipfsUpload extends Component {
   render() {
     return(
       <form onSubmit={this.handleSubmit.bind(this)}>
-       
-        <div>
-          <video src={'https://ipfs.io/ipfs/'+this.state.video} width="320" height="240" controls />
-          <label for="course-video">Upload Video</label>
-          <input accept="video/mp4,video/x-m4v,video/*"  type="file" class="course-video" onChange={this.uploadVideo} />
-        </div>
 
         <div>
-          <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="320" height="240" />
+          <label for="course-title">Course Title</label>
+          <input type="text" class="course-title" onChange={this.updateName} />
+        </div>  
+
+        <div>
           <label for="course-image">Upload Thumbnail Image</label>
+          <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="320" height="240" />
           <input accept="image/png, image/jpeg" type="file" class="course-image" onChange={this.uploadImage} />
         </div>
 
         <div>
-          <label for="course-title">Choose file to upload</label>
-          <input type="text" class="course-title" onChange={this.updateName} />
-        </div>       
+          <label for="course-video">Upload Video</label>
+          <video src={'https://ipfs.io/ipfs/'+this.state.video} width="320" height="240" controls />
+          <input accept="video/mp4,video/x-m4v,video/*"  type="file" class="course-video" onChange={this.uploadVideo} />
+        </div>     
         
         <button type="submit">Submit</button>
       </form>
