@@ -8,6 +8,7 @@ class ipfsUpload extends Component {
     super(props)
     this.state = {
       title: '',
+      description: '',
       image: '',
       video: ''
     }
@@ -44,9 +45,21 @@ class ipfsUpload extends Component {
     this.setState({title: event.target.value})
   };
 
+  updateDescription = (event) => {
+    event.preventDefault()
+    this.setState({description: event.target.value})
+  };
+
   handleSubmit(event) {
     event.preventDefault()
-    this.props.dispatch(addCourse(this.state.title, this.state.image, this.state.video))
+    this.props.dispatch(
+      addCourse(
+        this.state.title, 
+        this.state.description, 
+        this.state.image, 
+        this.state.video
+      )
+    )
   }
 
   render() {
@@ -54,20 +67,25 @@ class ipfsUpload extends Component {
       <form onSubmit={this.handleSubmit.bind(this)}>
 
         <div>
-          <label for="course-title">Course Title</label>
-          <input type="text" class="course-title" onChange={this.updateName} />
+          <label>Course Title</label>
+          <input type="text" onChange={this.updateName} />
         </div>  
 
         <div>
-          <label for="course-image">Upload Thumbnail Image</label>
+          <label>Course Description</label>
+          <textarea type="text"  maxlength="200" onChange={this.updateDescription} />
+        </div>  
+
+        <div>
+          <label>Course Image</label>
           <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="320" height="240" />
-          <input accept="image/png, image/jpeg" type="file" class="course-image" onChange={this.uploadImage} />
+          <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
         </div>
 
         <div>
-          <label for="course-video">Upload Video</label>
+          <label>Upload Video</label>
           <video src={'https://ipfs.io/ipfs/'+this.state.video} width="320" height="240" controls />
-          <input accept="video/mp4,video/x-m4v,video/*"  type="file" class="course-video" onChange={this.uploadVideo} />
+          <input accept="video/mp4,video/x-m4v,video/*"  type="file" onChange={this.uploadVideo} />
         </div>     
         
         <button type="submit">Submit</button>

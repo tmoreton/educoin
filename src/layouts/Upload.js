@@ -9,14 +9,12 @@ class Upload extends Component {
 
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>Upload Videos</h1>
-            <IpfsUpload/>
-          </div>
+      <div>
+        <h1 className="text-center">Create Course</h1>
+        <div className="flex center">
+          <IpfsUpload/>
         </div>
-      </main>
+      </div>
     )
   }
 }

@@ -48,8 +48,13 @@
     "whatwg-fetch": "1.0.0"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.0-14",
+    "@fortawesome/free-solid-svg-icons": "^5.1.0-11",
+    "@fortawesome/react-fontawesome": "0.1.0-11",
     "firebase": "^5.3.1",
+    "i": "^0.3.6",
     "ipfs-api": "^22.3.0",
+    "npm": "^6.3.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-redux": "^5.0.2",

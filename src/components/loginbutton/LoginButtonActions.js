@@ -23,21 +23,16 @@ export function loginUser() {
       const authentication = contract(AuthenticationContract)
       authentication.setProvider(web3.currentProvider)
 
-      // Declaring this for later so we can chain functions on Authentication.
-      var authenticationInstance
-
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
         // Log errors, if any.
         if (error) {
           console.error(error);
         }
-        console.log(coinbase)
+
         authentication.deployed().then(function(instance) {
-          authenticationInstance = instance
           // Attempt to login user.
-          authenticationInstance.login({from: coinbase})
-          .then(function(result) {
+          instance.login({from: coinbase}).then(function(result) {
             // If no error, login user.
             var userName = web3.toUtf8(result)
 
@@ -47,17 +42,15 @@ export function loginUser() {
             // This way, once logged in a user can still access the home page.
             var currentLocation = browserHistory.getCurrentLocation()
 
-            if ('redirect' in currentLocation.query)
-            {
+            if ('redirect' in currentLocation.query){
               return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
             }
 
             return browserHistory.push('/upload')
-          })
-          .catch(function(result) {
+
+          }).catch(function(result) {
             // If error, go to signup page.
             console.error('Wallet ' + coinbase + ' does not have an account!')
-
             return browserHistory.push('/signup')
           })
         })

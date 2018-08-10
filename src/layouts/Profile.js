@@ -1,18 +1,27 @@
 import React, { Component } from 'react'
 import ProfileForm from '../components/profileform/ProfileForm'
+import LogoutButton from '../components/logoutbutton/LogoutButton'
 
 class Profile extends Component {
+  constructor(props, { authData }) {
+    super(props)
+    authData = this.props
+  }
+
+  componentDidMount() {
+    console.log(this)
+  }
+
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>Profile</h1>
-            <p>Edit your account details here.</p>
-            <ProfileForm />
-          </div>
+      <div className="flex center">
+        <div>
+          <h1>Profile</h1>
+          <p>Edit your account details here.</p>
+          <ProfileForm />
+          <LogoutButton />
         </div>
-      </main>
+      </div>
     )
   }
 }

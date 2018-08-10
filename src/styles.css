@@ -102,6 +102,7 @@ button:hover,
 input[type='submit']:hover {
   background-color: #222;
   border: 1px solid #222;
+  color: #fff;
 }
 
 input[type='email'],

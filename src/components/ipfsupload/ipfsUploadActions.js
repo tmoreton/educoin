@@ -3,8 +3,6 @@ import store from '../../store'
 import ipfs from '../../util/ipfs';
 const contract = require('truffle-contract')
 
-
-
 function showCourses(courses) {
   return {
     type: 'SET_COURSES',
@@ -12,7 +10,7 @@ function showCourses(courses) {
   }
 }
 
-export function addCourse(name, image, video,) {
+export function addCourse(title, description, image, video,) {
   let web3 = store.getState().web3.web3Instance
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
@@ -34,7 +32,7 @@ export function addCourse(name, image, video,) {
         ipfsStorage.deployed().then(function(instance) {
           ipfsInstance = instance
             
-          ipfsInstance.addCourse(name, image, video, {from: coinbase})
+          ipfsInstance.addCourse(title, description, image, video, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
             console.log(result)
@@ -68,22 +66,24 @@ export function getCourses(courses) {
         }
 
         ipfsStorage.deployed().then(function(instance) {
-          ipfsInstance = instance
           
-
-          ipfsInstance.getCount({from: coinbase}).then(function(result) {
+          var courses = []
+          instance.getCount({from: coinbase}).then(function(result) {
 
             for (var i = 0; i<result.toNumber(); i++) {
-              ipfsInstance.getCourse(i, {from: coinbase}).then(function(hash) {
+              instance.getCourse(i, {from: coinbase}).then(function(hash) {
+                console.log(hash)
                 // If no error, login user.
                 var course = {
                   title: hash[0],
-                  image: hash[1],
-                  video: hash[2],
-                  userAddress: hash[3]
+                  description: hash[1],
+                  image: hash[2],
+                  video: hash[3],
+                  userAddress: hash[4]
                 }
+                courses.push(course)
                 
-                dispatch(showCourses([course]))
+                dispatch(showCourses(courses))
               })
             }
             

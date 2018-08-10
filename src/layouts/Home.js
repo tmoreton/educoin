@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getCourses } from '../components/ipfsupload/ipfsUploadActions'
+import { loginUser } from '../components/loginbutton/LoginButtonActions'
+import getWeb3 from '../util/getWeb3'
 
 class Home extends Component {
   constructor(props) {
@@ -8,27 +10,35 @@ class Home extends Component {
   }
 
   componentDidMount(){
-    this.props.dispatch(getCourses(this.props.ipfs))
+    // Initialize web3 and set in Redux.
+    getWeb3
+      .then(results => {
+        console.log('Web3 initialized!')
+        this.props.dispatch(getCourses())
+        // this.props.dispatch(loginUser())        
+      })
+      .catch(() => {
+        console.log('Error in web3 initialization.')
+      })
   }
-
 
   render() {
     return(
-      <main className="container">
-        <div className="pure-g">
-          <div className="pure-u-1-1">
-            <h1>Home</h1>
-            {this.props.ipfs.courses.map(result => (
+      <div>
+        <h1 className="text-center">Home</h1>
+        <div className="flex center">
+          {this.props.ipfs.courses.map(result => (
 
-              <div>
-                <p>{result.title}</p>
-                <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
-              </div>
- 
-            ))}
-          </div>
+            <div className="text-center">
+              <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
+              <h3>{result.title}</h3>
+              <p>{result.description}</p>
+              <button>Buy Course</button>
+            </div>
+
+          ))}
         </div>
-      </main>
+      </div>
     )
   }
 }

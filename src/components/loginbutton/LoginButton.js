@@ -1,7 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { loginUser } from './LoginButtonActions'
-
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faUser } from '@fortawesome/free-solid-svg-icons'
+library.add(faUser)
 
 class LoginButton extends Component {
   constructor(props) {
@@ -15,7 +18,9 @@ class LoginButton extends Component {
 
   render(){
   	return (
-  		<a href="#" onClick={(event) => this.onLoginUserClick(event)}>Login</a>
+  		<a href="#" onClick={(event) => this.onLoginUserClick(event)}>
+        <FontAwesomeIcon icon="user" />
+      </a>
   	)
   }
 }
