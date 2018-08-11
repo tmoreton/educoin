@@ -22,6 +22,8 @@ pragma solidity ^0.4.6;
 // }
 
 
+
+
 contract IpfsStorage {
   struct Course {
     string title;

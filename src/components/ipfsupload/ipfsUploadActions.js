@@ -74,6 +74,7 @@ export function getCourses(courses) {
               instance.getCourse(i, {from: coinbase}).then(function(hash) {
                 console.log(hash)
                 // If no error, login user.
+        
                 var course = {
                   title: hash[0],
                   description: hash[1],

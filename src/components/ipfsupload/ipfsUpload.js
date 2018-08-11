@@ -22,6 +22,7 @@ class ipfsUpload extends Component {
     reader.onloadend = () => {
       const buffer = Buffer.from(reader.result);
       ipfs.add(buffer, (err, ipfsHash) => {
+        console.log(ipfsHash[0].hash)
         this.setState({image: ipfsHash[0].hash});
       })
     }    
