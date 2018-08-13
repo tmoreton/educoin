@@ -1,38 +1,66 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { signUpUser } from './SignUpFormActions'
-import { loginUser } from '../loginbutton/LoginButtonActions'
+import ipfs from '../../util/ipfs';
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: ''
+      name: '',
+      about: '',
+      image: '',
     }
   }
 
-  componentDidMount() {
-    // this.props.dispatch(loginUser())
-  }
+  uploadImage = (event) => {
+    event.preventDefault()
+    const file = event.target.files[0]
+    let reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result);
+      ipfs.add(buffer, (err, ipfsHash) => {
+        this.setState({image: ipfsHash[0].hash});
+      })
+    }    
+  };
 
-  onInputChange(event) {
-    this.setState({ name: event.target.value })
-  }
+  updateName = (event) => {
+    event.preventDefault()
+    this.setState({name: event.target.value})
+  };
+
+  updateAbout = (event) => {
+    event.preventDefault()
+    this.setState({about: event.target.value})
+  };
 
   handleSubmit(event) {
     event.preventDefault()
-
-    if (this.state.name.length < 2){
-      return alert('Please fill in your name.')
-    }
-
-    this.props.dispatch(signUpUser(this.state.name))
+    this.props.dispatch(signUpUser(this.state.name, this.state.about, this.state.image))
   }
 
   render() {
     return(
       <form onSubmit={this.handleSubmit.bind(this)}>
-        <input id="name" type="text" value={this.state.name} onChange={this.onInputChange.bind(this)} placeholder="Name" />
+
+        <div>
+          <label>Profile Pic</label>
+          <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
+          <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
+        </div>
+
+        <div>
+          <label>Your Name</label>
+          <input type="text" value={this.state.name} onChange={this.updateName} />
+        </div>  
+
+        <div>
+          <label>About Me</label>
+          <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
+        </div>  
+
         <button type="submit">Sign Up</button>
       </form>
     )

@@ -9,6 +9,7 @@ function web3Initialized(results) {
   }
 }
 
+
 let getWeb3 = new Promise(function(resolve, reject) {
   // Wait for loading completion to avoid race conditions with web3 injection timing.
   window.addEventListener('load', function(dispatch) {
@@ -19,11 +20,11 @@ let getWeb3 = new Promise(function(resolve, reject) {
     if (typeof web3 !== 'undefined') {
       // Use Mist/MetaMask's provider.
       web3 = new Web3(web3.currentProvider)
+      web3.eth.defaultAccount = web3.eth.accounts[0];
 
       results = {
         web3Instance: web3
       }
-
       console.log('Injected web3 detected.');
 
       resolve(store.dispatch(web3Initialized(results)))

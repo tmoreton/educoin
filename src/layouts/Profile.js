@@ -3,9 +3,8 @@ import ProfileForm from '../components/profileform/ProfileForm'
 import LogoutButton from '../components/logoutbutton/LogoutButton'
 
 class Profile extends Component {
-  constructor(props, { authData }) {
+  constructor(props) {
     super(props)
-    authData = this.props
   }
 
   componentDidMount() {

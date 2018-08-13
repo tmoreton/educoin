@@ -2,9 +2,8 @@ import React, { Component } from 'react'
 import IpfsUpload from '../components/ipfsupload/ipfsUpload'
 
 class Upload extends Component {
-  constructor(props, { authData }) {
+  constructor(props) {
     super(props)
-    authData = this.props
   }
 
   render() {

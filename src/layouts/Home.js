@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getCourses } from '../components/ipfsupload/ipfsUploadActions'
+import { getCourses, purchaseCourse } from '../components/ipfsupload/ipfsUploadActions'
 import { loginUser } from '../components/loginbutton/LoginButtonActions'
 import getWeb3 from '../util/getWeb3'
 
@@ -22,8 +22,9 @@ class Home extends Component {
       })
   }
 
-  button() {
-    console.log(this)
+  buyButton = () => {
+    
+    this.props.dispatch(purchaseCourse("0xa267863bce691917df94fc3141ec11fdd6e82253", 100))
   }
 
   render() {
@@ -37,7 +38,7 @@ class Home extends Component {
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
-              <button onClick={this.button.bind(result)}>Buy Course</button>
+              <button onClick={this.buyButton}>Buy Course</button>
             </div>
 
           ))}

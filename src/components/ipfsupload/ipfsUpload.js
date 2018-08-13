@@ -74,7 +74,7 @@ class ipfsUpload extends Component {
 
         <div>
           <label>Course Description</label>
-          <textarea type="text"  maxlength="200" onChange={this.updateDescription} />
+          <textarea type="text"  maxLength="200" onChange={this.updateDescription} />
         </div>  
 
         <div>

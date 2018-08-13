@@ -1,4 +1,5 @@
 import IpfsStorageContract from '../../../build/contracts/IpfsStorage.json'
+import Transfer from '../../../build/contracts/Transfer.json'
 import store from '../../store'
 import ipfs from '../../util/ipfs';
 const contract = require('truffle-contract')
@@ -69,7 +70,6 @@ export function getCourses(courses) {
           
           var courses = []
           instance.getCount({from: coinbase}).then(function(result) {
-
             for (var i = 0; i<result.toNumber(); i++) {
               instance.getCourse(i, {from: coinbase}).then(function(hash) {
                 console.log(hash)
@@ -82,14 +82,47 @@ export function getCourses(courses) {
                   video: hash[3],
                   userAddress: hash[4]
                 }
-                courses.push(course)
+                courses.push(course);
                 
-                dispatch(showCourses(courses))
+                dispatch(showCourses(courses));
               })
             }
             
           })
 
+        })
+      })
+    }
+  } else {
+    console.error('Web3 is not initialized.');
+  }
+}
+
+export function purchaseCourse() {
+
+  let web3 = store.getState().web3.web3Instance
+  // Double-check web3's status.
+  if (typeof web3 !== 'undefined') {
+
+    return function(dispatch) {
+      const transfer = contract(Transfer)
+      transfer.setProvider(web3.currentProvider)
+
+      // Get current ethereum wallet.
+      // web3.eth.sendTransaction({from:eth.coinbase,to:receiver, value:web3.toWei(0.05, "ether")});
+      web3.eth.getCoinbase((error, coinbase) => {
+        // Log errors, if any.
+        if (error) {
+          console.error(error);
+        }
+        
+
+        transfer.deployed().then(function(instance) {
+          instance.transfer(0xa267863bce691917df94fc3141ec11fdd6e82253, 10, {from: coinbase}).then(function(result) {
+
+            console.log(result)
+            
+          })
         })
       })
     }
