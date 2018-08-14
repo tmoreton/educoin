@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateUser } from './ProfileFormActions'
 import { getCourses } from '../ipfsupload/ipfsUploadActions'
+import { getBalance } from '../loginbutton/LoginButtonActions'
 import ipfs from '../../util/ipfs';
 
 class ProfileForm extends Component {
@@ -11,10 +12,11 @@ class ProfileForm extends Component {
       name: this.props.user.name,
       about: this.props.user.about,
       image: this.props.user.image,
-      userAddress: this.props.user.userAddress
+      userAddress: this.props.user.userAddress,
+      balance: this.props.user.balance
     }
   }
-  
+
   uploadImage = (event) => {
     event.preventDefault()
     const file = event.target.files[0]
@@ -52,6 +54,7 @@ class ProfileForm extends Component {
           <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
           <input type="text" value={this.state.name} onChange={this.updateName} />
           <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
+          <p>Token Balance: {this.state.balance}</p>
           <p>ETH: {this.state.userAddress}</p>
         </div>
 

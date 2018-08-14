@@ -17,8 +17,4 @@ contract Transfer {
     balances[_receiver] += _amount;
   }
 
-  function transferPoop(address receiver, uint256 _amount) public payable {
-    receiver.transfer(_amount);
-  }
-
 }

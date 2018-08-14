@@ -3,6 +3,7 @@ var Killable = artifacts.require("./zeppelin/lifecycle/Killable.sol");
 var Authentication = artifacts.require("./Authentication.sol");
 var IpfsStorage = artifacts.require("./IpfsStorage.sol");
 var Transfer = artifacts.require("./Transfer.sol");
+var Token = artifacts.require("./Token.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(Ownable);
@@ -12,4 +13,5 @@ module.exports = function(deployer) {
   deployer.deploy(Authentication);
   deployer.deploy(IpfsStorage);
   deployer.deploy(Transfer);
+  deployer.deploy(Token);
 };

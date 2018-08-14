@@ -1,14 +1,21 @@
 import AuthenticationContract from '../../../build/contracts/Authentication.json'
+import TokenContract from '../../../build/contracts/Token.json'
 import { browserHistory } from 'react-router'
 import store from '../../store'
 
 const contract = require('truffle-contract')
 
-export const USER_LOGGED_IN = 'USER_LOGGED_IN'
 function userLoggedIn(user) {
   return {
-    type: USER_LOGGED_IN,
+    type: 'USER_LOGGED_IN',
     payload: user
+  }
+}
+
+function userBalance(balance) {
+  return {
+    type: 'USER_BALANCE',
+    payload: balance
   }
 }
 
@@ -22,6 +29,8 @@ export function loginUser() {
       // Using truffle-contract we create the authentication object.
       const authentication = contract(AuthenticationContract)
       authentication.setProvider(web3.currentProvider)
+      const token = contract(TokenContract)
+      token.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -30,18 +39,25 @@ export function loginUser() {
           console.error(error);
         }
 
-        authentication.deployed().then(function(instance) {
+        authentication.deployed().then(function(authInstance) {
           // Attempt to login user.
-          instance.login({from: coinbase}).then(function(result) {
+          authInstance.login({from: coinbase}).then(function(userObject) {
             // If no error, login user.
+            token.deployed().then(function(tokenInstance) {
+              // Attempt to login user.
+              tokenInstance.getBalance({from: coinbase}).then(function(balanceObject) {
+                console.log(balanceObject)
+                var user = {
+                  name: web3.toUtf8(userObject[0]),
+                  about: userObject[1],
+                  image: userObject[2],
+                  userAddress: userObject[3],
+                  balance: balanceObject.toNumber()
+                }
+                dispatch(userLoggedIn(user))
 
-            var user = {
-              name: web3.toUtf8(result[0]),
-              about: result[1],
-              image: result[2],
-              userAddress: result[3]
-            }
-            dispatch(userLoggedIn(user))
+              })
+            })
 
             // Used a manual redirect here as opposed to a wrapper.
             // This way, once logged in a user can still access the home page.

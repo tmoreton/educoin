@@ -10,7 +10,8 @@ const userReducer = (state = initialState, action) => {
         name: action.payload.name,
         about: action.payload.about,
         image: action.payload.image,
-        userAddress: action.payload.userAddress
+        userAddress: action.payload.userAddress,
+        balance: action.payload.balance,
       }
     })
   }
