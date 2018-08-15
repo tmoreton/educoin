@@ -29,7 +29,7 @@ contract Token {
    * Initializes contract with initial supply tokens to the creator of the contract
    */
   constructor() public {
-      totalSupply = 21000000;  // Update total supply with the decimal amount
+      totalSupply = 21000000000;  // Update total supply with the decimal amount
       balanceOf[msg.sender] = totalSupply;                // Give the creator all initial tokens
       name = 'EduCoin';                                   // Set the name for display purposes
       symbol = 'EDU';                               // Set the symbol for display purposes

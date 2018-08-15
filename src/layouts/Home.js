@@ -22,9 +22,9 @@ class Home extends Component {
       })
   }
 
-  buyButton = () => {
-    
-    this.props.dispatch(purchaseCourse("0xa267863bce691917df94fc3141ec11fdd6e82253", 100))
+  buyButton() {
+    console.log(this.address)
+    this.state.props.dispatch(purchaseCourse(this.address, 100))
   }
 
   render() {
@@ -38,7 +38,7 @@ class Home extends Component {
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
-              <button onClick={this.buyButton}>Buy Course</button>
+              <button onClick={this.buyButton.bind({state: this, address: result.userAddress})}>Buy Course</button>
             </div>
 
           ))}
