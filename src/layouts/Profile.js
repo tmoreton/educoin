@@ -7,10 +7,6 @@ class Profile extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    console.log(this)
-  }
-
   render() {
     return(
       <div className="flex center">

@@ -35,9 +35,6 @@ contract Token {
       symbol = 'EDU';                               // Set the symbol for display purposes
   }
 
-  function getBalance() public constant returns(uint) {
-    return balanceOf[msg.sender];
-  }
   /**
    * Internal transfer, only can be called by this contract
    */
@@ -67,7 +64,7 @@ contract Token {
    * @param _to The address of the recipient
    * @param _value the amount to send
    */
-  function transfer(address _to, uint256 _value) public returns (bool success) {
+  function transfer(address _to, uint256 _value ) public payable returns (bool success) {
       _transfer(msg.sender, _to, _value);
       return true;
   }

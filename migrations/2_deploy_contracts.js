@@ -10,6 +10,7 @@ module.exports = function(deployer) {
   deployer.deploy(Killable);
   deployer.link(Killable, Authentication);
   deployer.deploy(Authentication);
-  deployer.deploy(IpfsStorage);
+  deployer.link(Authentication, Token);
   deployer.deploy(Token);
+  deployer.deploy(IpfsStorage);
 };

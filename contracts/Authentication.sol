@@ -1,12 +1,28 @@
 pragma solidity ^0.4.2;
 
 import './zeppelin/lifecycle/Killable.sol';
+import './Token.sol';
+
+
+// contract Contract {
+//   uint public Num;
+
+//   function Contract(uint num) {
+//     Num = num;
+//   }
+
+//   function getNum() public returns(uint) {
+//     return Num;
+//   }
+// }
 
 contract Authentication is Killable {
+
   struct User {
     bytes32 name;
     string about;
     string image;
+    uint[] course;
     address userAddress;
   }
 
@@ -26,8 +42,8 @@ contract Authentication is Killable {
     _;
   }
 
-  function login() constant public onlyExistingUser returns (bytes32, string, string, address) {
-    return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image, users[msg.sender].userAddress);
+  function login() constant public onlyExistingUser returns (bytes32, string, string, address, uint[]) {
+    return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image, users[msg.sender].userAddress, users[msg.sender].course);
   }
 
   function signup(bytes32 _name, string _about, string _image) public payable onlyValidName(_name) returns (bytes32, string, string, address) {
@@ -58,5 +74,11 @@ contract Authentication is Killable {
     users[msg.sender].about = _about;
     users[msg.sender].image = _image;
     return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image);
+  }  
+
+  function addCourse(uint _index) public returns (bool success) {
+    users[msg.sender].course.push(_index);
+    return true;
   }
+
 }

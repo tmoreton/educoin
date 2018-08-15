@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getCourses, purchaseCourse } from '../components/ipfsupload/ipfsUploadActions'
-import { loginUser } from '../components/loginbutton/LoginButtonActions'
+import { getCourses } from '../components/ipfsupload/ipfsUploadActions'
+import { loginUser, purchaseCourse } from '../components/loginbutton/LoginButtonActions'
 import getWeb3 from '../util/getWeb3'
 
 class Home extends Component {
@@ -23,8 +23,8 @@ class Home extends Component {
   }
 
   buyButton() {
-    console.log(this.address)
-    this.state.props.dispatch(purchaseCourse(this.address, 100))
+    // console.log(this.result.userAddress)
+    this.state.props.dispatch(purchaseCourse(this.result.userAddress, 100, this.result.index.toNumber()))
   }
 
   render() {
@@ -34,11 +34,11 @@ class Home extends Component {
         <div className="flex center">
           {this.props.ipfs.courses.map(result => (
 
-            <div className="text-center">
+            <div key={result.index.toNumber()} className="text-center">
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
-              <button onClick={this.buyButton.bind({state: this, address: result.userAddress})}>Buy Course</button>
+              <button onClick={this.buyButton.bind({state: this, result: result})}>Buy Course</button>
             </div>
 
           ))}

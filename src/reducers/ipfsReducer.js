@@ -1,6 +1,7 @@
 const initialState = {
   ipfsInstance: null,
-  courses: []
+  courses: [],
+  myCourses: []
 }
 
 const ipfsReducer = (state = initialState, action) => {
@@ -12,6 +13,11 @@ const ipfsReducer = (state = initialState, action) => {
   if (action.type === 'SET_COURSES'){
     return Object.assign({}, state, {
       courses: action.payload
+    })
+  }
+  if (action.type === 'MY_COURSES'){
+    return Object.assign({}, state, {
+      myCourses: action.payload
     })
   }
   return state
