@@ -1,5 +1,6 @@
 const initialState = {
   data: null,
+  course: null
 }
 
 const userReducer = (state = initialState, action) => {
@@ -14,6 +15,13 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       data: null,
+    })
+  }
+
+  if (action.type === 'WATCH_COURSE')
+  {
+    return Object.assign({}, state, {
+      course: action.payload,
     })
   }
 

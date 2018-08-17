@@ -24,7 +24,11 @@ contract IpfsStorage {
     return courses.length;
   }
 
-  function getCourse(uint index) public constant returns( string, string, string, string, address, uint) {
+  function getCourse(uint index) public constant returns( string, string, string, address, uint) {
+    return ( courses[index].title, courses[index].description, courses[index].image, courses[index].userAddress, index );
+  }
+
+  function watchCourse(uint index) public constant returns( string, string, string, string, address, uint) {
     return ( courses[index].title, courses[index].description, courses[index].image, courses[index].video, courses[index].userAddress, index );
   }
 }

@@ -11,15 +11,15 @@ class Home extends Component {
 
   componentDidMount(){
     // Initialize web3 and set in Redux.
-    getWeb3
-      .then(results => {
-        console.log('Web3 initialized!')
-        this.props.dispatch(getCourses())
-        // this.props.dispatch(loginUser())        
-      })
-      .catch(() => {
-        console.log('Error in web3 initialization.')
-      })
+    // getWeb3
+    //   .then(results => {
+    //     console.log('Web3 initialized!')
+    //     this.props.dispatch(getCourses())
+    //     // this.props.dispatch(loginUser())        
+    //   })
+    //   .catch(() => {
+    //     console.log('Error in web3 initialization.')
+    //   })
   }
 
   buyButton() {

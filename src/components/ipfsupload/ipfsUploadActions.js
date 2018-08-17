@@ -81,31 +81,29 @@ export function getCourses(userId) {
               instance.getCourse(i, {from: coinbase}).then(function(hash) {
                 
                 if(userId === null || userId === undefined){
-                  console.log('inside if')
+
                   var course = {
                     title: hash[0],
                     description: hash[1],
                     image: hash[2],
-                    video: hash[3],
-                    userAddress: hash[4],
-                    index: hash[5]
+                    userAddress: hash[3],
+                    index: hash[4]
                   }
                   courses.push(course);
-                  
                   dispatch(showCourses(courses));   
-                } else if (userId === hash[4]) {
-                  console.log('inside match')
+
+                } else if (userId === hash[3]) {
+
                   var course = {
                     title: hash[0],
                     description: hash[1],
                     image: hash[2],
-                    video: hash[3],
-                    userAddress: hash[4],
-                    index: hash[5]
+                    userAddress: hash[3],
+                    index: hash[4]
                   }
                   courses.push(course);
-                  
                   dispatch(myCourses(courses)); 
+
                 }
 
               })

@@ -4,6 +4,12 @@ interface tokenRecipient { function receiveApproval(address _from, uint256 _valu
 
 contract Token {
   // Public variables of the token
+  struct Purchases {
+    string[] purchases;
+  }
+
+  mapping(address => Purchases) myPurchases;
+
   string public name;
   string public symbol;
   uint8 public decimals = 18;
@@ -35,6 +41,18 @@ contract Token {
       symbol = 'EDU';                               // Set the symbol for display purposes
   }
 
+  function getBalance() public constant returns(uint) {
+    return balanceOf[msg.sender];
+  }
+
+  function getPurchaseCount() public constant returns(uint length) {
+    return myPurchases[msg.sender].purchases.length;
+  }
+
+  function getPurchaseString(uint index) public constant returns(string value) {
+    return myPurchases[msg.sender].purchases[index];
+  }
+
   /**
    * Internal transfer, only can be called by this contract
    */
@@ -64,9 +82,10 @@ contract Token {
    * @param _to The address of the recipient
    * @param _value the amount to send
    */
-  function transfer(address _to, uint256 _value ) public payable returns (bool success) {
+  function transfer(address _to, uint256 _value, string courseId ) public payable returns (uint) {
+      myPurchases[msg.sender].purchases.push(courseId);
       _transfer(msg.sender, _to, _value);
-      return true;
+      return myPurchases[msg.sender].purchases.length;
   }
 
   /**
