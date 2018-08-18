@@ -1,7 +1,6 @@
 const initialState = {
   ipfsInstance: null,
   courses: [],
-  myCourses: []
 }
 
 const ipfsReducer = (state = initialState, action) => {

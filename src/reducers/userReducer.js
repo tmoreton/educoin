@@ -30,11 +30,13 @@ const userReducer = (state = initialState, action) => {
     })
   }
 
-  if (action.type === 'MY_PURCHASES'){
+  if (action.type === 'MY_PURCHASES')
+  {
     return Object.assign({}, state, {
       myPurchases: action.payload
     })
   }
+
   if (action.type === 'MY_COURSES'){
     return Object.assign({}, state, {
       myCourses: action.payload

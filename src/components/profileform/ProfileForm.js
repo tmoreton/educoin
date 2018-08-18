@@ -15,7 +15,6 @@ class ProfileForm extends Component {
       image: this.props.user.image,
       userAddress: this.props.user.userAddress,
       balance: this.props.user.balance,
-      courses: this.props.user.courses
     }
   }
 

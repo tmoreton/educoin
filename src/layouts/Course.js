@@ -6,11 +6,6 @@ class Course extends Component {
     super(props)
   }
 
-  componentDidMount() {
-    console.log(this.props.course)
-  }
-
-
   render() {
     return(
       <div className="flex center">
