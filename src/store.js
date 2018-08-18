@@ -20,7 +20,7 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer)
 
 const store = createStore(
-  persistedReducer,
+  reducer,
   composeEnhancers(
     applyMiddleware(
       thunkMiddleware,

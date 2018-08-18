@@ -22,7 +22,7 @@ function userBalance(balance) {
   }
 }
 
-function watchCourse(course) {
+function watchCourseFunction(course) {
   return {
     type: 'WATCH_COURSE',
     payload: course
@@ -58,7 +58,7 @@ export function loginUser() {
             
             token.deployed().then(function(tokenInstance) {
               tokenInstance.getBalance({from: coinbase}).then(function(result) {
-
+                console.log("logging in")
                 var user = {
                   name: web3.toUtf8(userObject[0]),
                   about: userObject[1],
@@ -68,7 +68,7 @@ export function loginUser() {
                   balance: result.toNumber(),
                 }
                 dispatch(userLoggedIn(user))
-
+                browserHistory.push('/profile')
               })
             })
             // Used a manual redirect here as opposed to a wrapper.
@@ -78,8 +78,6 @@ export function loginUser() {
             if ('redirect' in currentLocation.query){
               return browserHistory.push(decodeURIComponent(currentLocation.query.redirect))
             }
-
-            return browserHistory.push('/upload')
 
           })
           .catch(function(result) {
@@ -121,7 +119,6 @@ export function purchaseCourse(seller, amount, courseId) {
 
             ipfs.deployed().then(function(ipfsInstance) {
               ipfsInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
-                console.log(course)
 
                 var course = {
                   title: course[0],
@@ -129,7 +126,7 @@ export function purchaseCourse(seller, amount, courseId) {
                   image: course[2],
                   video: course[3],
                 }
-                dispatch(watchCourse(course))
+                dispatch(watchCourseFunction(course))
 
                 return browserHistory.push('/course')
               })
@@ -138,6 +135,46 @@ export function purchaseCourse(seller, amount, courseId) {
           })
         
         })
+      })
+    }
+  } else {
+    console.error('Web3 is not initialized.');
+  }
+}
+
+export function watchCourse(courseId) {
+
+  let web3 = store.getState().web3.web3Instance
+  // Double-check web3's status.
+  if (typeof web3 !== 'undefined') {
+
+    return function(dispatch) {
+
+      // Get Token Contract
+      const ipfs = contract(IpfsContract)
+      ipfs.setProvider(web3.currentProvider)
+
+      web3.eth.getCoinbase((error, coinbase) => {
+        // Log errors, if any.
+        if (error) {
+          console.error(error);
+        }
+
+        ipfs.deployed().then(function(ipfsInstance) {
+          ipfsInstance.watchCourse( courseId, {from: coinbase}).then(function(hash) {
+
+            var course = {
+              title: hash[0],
+              description: hash[1],
+              image: hash[2],
+              video: hash[3],
+            }
+            dispatch(watchCourseFunction(course))
+
+            return browserHistory.push('/course')
+          })
+        })
+
       })
     }
   } else {

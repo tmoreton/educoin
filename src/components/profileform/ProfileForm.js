@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateUser } from './ProfileFormActions'
+import { updateUser, getPurchases, getMyCourses } from './ProfileFormActions'
 import { getCourses } from '../ipfsupload/ipfsUploadActions'
-import { getBalance } from '../loginbutton/LoginButtonActions'
+import { getBalance, watchCourse } from '../loginbutton/LoginButtonActions'
 import ipfs from '../../util/ipfs';
+import { browserHistory } from 'react-router'
 
 class ProfileForm extends Component {
   constructor(props) {
@@ -19,7 +20,9 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(getCourses(this.props.user.userAddress))
+
+    this.props.dispatch(getPurchases());
+    this.props.dispatch(getMyCourses(this.props.user.userAddress));
   }
 
   uploadImage = (event) => {
@@ -50,36 +53,54 @@ class ProfileForm extends Component {
     this.props.dispatch(updateUser(this.state.name, this.state.about, this.state.image))
   }
 
+  watchCourse(){
+    this.state.props.dispatch(watchCourse(this.result.index))
+  }
+
   render() {
     return(
-      <form className="flex center" onSubmit={this.handleSubmit.bind(this)}>
+      <div>
+        <form className="flex center" onSubmit={this.handleSubmit.bind(this)}>
 
+          <div>
+            <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
+            <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
+            <input type="text" value={this.state.name} onChange={this.updateName} />
+            <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
+            <p>Token Balance: {this.state.balance} EDU</p>
+            <p>Token Address: {this.state.userAddress}</p>
+          </div>
+
+          <button type="submit">Update</button>
+          
+        </form>
         <div>
-          <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
-          <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
-          <input type="text" value={this.state.name} onChange={this.updateName} />
-          <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
-          <p>Token Balance: {this.state.balance} EDU</p>
-          <p>Token Address: {this.state.userAddress}</p>
-        </div>
-
-        <button type="submit">Update</button>
-
-        <div>
-          <h1>My Courses</h1>
-          {this.props.ipfs.myCourses.map(result => (
+          <h1>My Purchases</h1>
+          {this.props.myPurchases.map(result => (
 
             <div className="text-center">
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
-              <button>Watch</button>
+              <button onClick={this.watchCourse.bind({state: this, result: result})}>Watch</button>
             </div>
 
           ))}
         </div>
-        
-      </form>
+        <div>
+          <h1>My Courses</h1>
+          {this.props.myCourses.map(result => (
+
+            <div className="text-center">
+              <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
+              <h3>{result.title}</h3>
+              <p>{result.description}</p>
+              <button onClick={this.watchCourse.bind({state: this, result: result})}>Watch</button>
+            </div>
+
+          ))}
+        </div>
+      </div>
     )
   }
 }
@@ -87,7 +108,9 @@ class ProfileForm extends Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     user: state.user.data,
-    ipfs: state.ipfs
+    myPurchases: state.user.myPurchases,
+    myCourses: state.user.myCourses,
+    course: state.user.course
   }
 }
 

@@ -1,6 +1,8 @@
 const initialState = {
   data: null,
-  course: null
+  course: {},
+  myPurchases: [],
+  myCourses: []
 }
 
 const userReducer = (state = initialState, action) => {
@@ -15,6 +17,9 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       data: null,
+      course: {},
+      myPurchases: [],
+      myCourses: []
     })
   }
 
@@ -22,6 +27,17 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       course: action.payload,
+    })
+  }
+
+  if (action.type === 'MY_PURCHASES'){
+    return Object.assign({}, state, {
+      myPurchases: action.payload
+    })
+  }
+  if (action.type === 'MY_COURSES'){
+    return Object.assign({}, state, {
+      myCourses: action.payload
     })
   }
 

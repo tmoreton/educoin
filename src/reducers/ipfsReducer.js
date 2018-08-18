@@ -15,11 +15,7 @@ const ipfsReducer = (state = initialState, action) => {
       courses: action.payload
     })
   }
-  if (action.type === 'MY_COURSES'){
-    return Object.assign({}, state, {
-      myCourses: action.payload
-    })
-  }
+
   return state
 }
 

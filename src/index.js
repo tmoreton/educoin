@@ -23,7 +23,6 @@ const history = syncHistoryWithStore(browserHistory, store)
 
 ReactDOM.render((
     <Provider store={store}>
-      <PersistGate persistor={persistor}>
         <Router history={history}>
           <Route path="/" component={App}>
             <IndexRoute component={Home} />
@@ -33,8 +32,9 @@ ReactDOM.render((
             <Route path="profile" component={UserIsAuthenticated(Profile)} />
           </Route>
         </Router>
-      </PersistGate>
     </Provider>
   ),
   document.getElementById('root')
 )
+// <PersistGate persistor={persistor}>
+// </PersistGate>

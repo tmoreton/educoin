@@ -23,7 +23,7 @@ class Home extends Component {
   }
 
   buyButton() {
-    this.state.props.dispatch(purchaseCourse(this.result.userAddress, 100, this.result.index.toNumber()))
+    this.state.props.dispatch(purchaseCourse(this.result.userAddress, 100, this.result.index))
   }
 
   render() {

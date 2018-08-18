@@ -2,19 +2,13 @@ import IpfsStorageContract from '../../../build/contracts/IpfsStorage.json'
 import Token from '../../../build/contracts/Token.json'
 import store from '../../store'
 import ipfs from '../../util/ipfs';
+import { browserHistory } from 'react-router'
 const contract = require('truffle-contract')
-var ipfsInstance
+var ipfsInstance;
 
 function showCourses(courses) {
   return {
     type: 'SET_COURSES',
-    payload: courses
-  }
-}
-
-function myCourses(courses) {
-  return {
-    type: 'MY_COURSES',
     payload: courses
   }
 }
@@ -42,7 +36,7 @@ export function addCourse(title, description, image, video,) {
           ipfsInstance.addCourse(title, description, image, video, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
-            console.log(result)
+            return browserHistory.push('/')
           })
         })
       })
@@ -80,7 +74,7 @@ export function getCourses(userId) {
             for (var i = 0; i<result.toNumber(); i++) {
               instance.getCourse(i, {from: coinbase}).then(function(hash) {
                 
-                if(userId === null || userId === undefined){
+                // if(userId === null || userId === undefined){
 
                   var course = {
                     title: hash[0],
@@ -92,19 +86,19 @@ export function getCourses(userId) {
                   courses.push(course);
                   dispatch(showCourses(courses));   
 
-                } else if (userId === hash[3]) {
+                // } else if (userId === hash[3]) {
 
-                  var course = {
-                    title: hash[0],
-                    description: hash[1],
-                    image: hash[2],
-                    userAddress: hash[3],
-                    index: hash[4]
-                  }
-                  courses.push(course);
-                  dispatch(myCourses(courses)); 
+                //   var course = {
+                //     title: hash[0],
+                //     description: hash[1],
+                //     image: hash[2],
+                //     userAddress: hash[3],
+                //     index: hash[4]
+                //   }
+                //   courses.push(course);
+                //   dispatch(myCourses(courses)); 
 
-                }
+                // }
 
               })
             }
