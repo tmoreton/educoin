@@ -10,18 +10,18 @@ class ProfileForm extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      name: this.props.user.name,
-      about: this.props.user.about,
-      image: this.props.user.image,
-      userAddress: this.props.user.userAddress,
-      balance: this.props.user.balance,
+      name: this.props.user.data.name,
+      about: this.props.user.data.about,
+      image: this.props.user.data.image,
+      userAddress: this.props.user.data.userAddress,
+      balance: this.props.user.data.balance,
     }
   }
 
   componentDidMount() {
-
+    console.log(this.props.user)
     this.props.dispatch(getPurchases());
-    this.props.dispatch(getMyCourses(this.props.user.userAddress));
+    this.props.dispatch(getMyCourses(this.state.userAddress));
   }
 
   uploadImage = (event) => {
@@ -75,7 +75,7 @@ class ProfileForm extends Component {
         </form>
         <div>
           <h1>My Purchases</h1>
-          {this.props.myPurchases.map(result => (
+          {this.props.user.myPurchases.map(result => (
 
             <div className="text-center">
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
@@ -88,7 +88,7 @@ class ProfileForm extends Component {
         </div>
         <div>
           <h1>My Courses</h1>
-          {this.props.myCourses.map(result => (
+          {this.props.user.myCourses.map(result => (
 
             <div className="text-center">
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
@@ -106,10 +106,7 @@ class ProfileForm extends Component {
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user.data,
-    myPurchases: state.user.myPurchases,
-    myCourses: state.user.myCourses,
-    course: state.user.course
+    user: state.user
   }
 }
 

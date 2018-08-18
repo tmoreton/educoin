@@ -131,7 +131,7 @@ export function getPurchases() {
 
 export function getMyCourses(userId) {
   let web3 = store.getState().web3.web3Instance
-
+  console.log(userId)
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
 
