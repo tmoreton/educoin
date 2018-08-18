@@ -73,8 +73,8 @@ class ProfileForm extends Component {
           <button type="submit">Update</button>
           
         </form>
-        <div>
-          <h1>My Purchases</h1>
+        <h1>My Purchases</h1>
+        <div className="flex">
           {this.props.user.myPurchases.map(result => (
 
             <div className="text-center">
@@ -86,8 +86,8 @@ class ProfileForm extends Component {
 
           ))}
         </div>
-        <div>
-          <h1>My Courses</h1>
+        <h1>My Courses</h1>
+        <div className="flex">
           {this.props.user.myCourses.map(result => (
 
             <div className="text-center">
