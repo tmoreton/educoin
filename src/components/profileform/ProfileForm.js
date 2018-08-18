@@ -69,7 +69,7 @@ class ProfileForm extends Component {
           <h1>My Courses</h1>
           {this.props.ipfs.myCourses.map(result => (
 
-            <div key={result.index.toNumber()} className="text-center">
+            <div className="text-center">
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>

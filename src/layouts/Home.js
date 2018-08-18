@@ -11,19 +11,18 @@ class Home extends Component {
 
   componentDidMount(){
     // Initialize web3 and set in Redux.
-    // getWeb3
-    //   .then(results => {
-    //     console.log('Web3 initialized!')
-    //     this.props.dispatch(getCourses())
-    //     // this.props.dispatch(loginUser())        
-    //   })
-    //   .catch(() => {
-    //     console.log('Error in web3 initialization.')
-    //   })
+    getWeb3
+      .then(results => {
+        console.log('Web3 initialized!')
+        this.props.dispatch(getCourses())
+        // this.props.dispatch(loginUser())        
+      })
+      .catch(() => {
+        console.log('Error in web3 initialization.')
+      })
   }
 
   buyButton() {
-    // console.log(this.result.userAddress)
     this.state.props.dispatch(purchaseCourse(this.result.userAddress, 100, this.result.index.toNumber()))
   }
 
@@ -34,7 +33,7 @@ class Home extends Component {
         <div className="flex center">
           {this.props.ipfs.courses.map(result => (
 
-            <div key={result.index.toNumber()} className="text-center">
+            <div className="text-center">
               <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
