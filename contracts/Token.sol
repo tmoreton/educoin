@@ -5,7 +5,7 @@ interface tokenRecipient { function receiveApproval(address _from, uint256 _valu
 contract Token {
   // Public variables of the token
   struct Purchases {
-    string[] purchases;
+    uint[] purchases;
   }
 
   mapping(address => Purchases) myPurchases;
@@ -49,7 +49,7 @@ contract Token {
     return myPurchases[msg.sender].purchases.length;
   }
 
-  function getPurchaseString(uint index) public constant returns(string value) {
+  function getPurchaseId(uint index) public constant returns(uint) {
     return myPurchases[msg.sender].purchases[index];
   }
 
@@ -82,7 +82,7 @@ contract Token {
    * @param _to The address of the recipient
    * @param _value the amount to send
    */
-  function transfer(address _to, uint256 _value, string courseId ) public payable returns (uint) {
+  function transfer(address _to, uint256 _value, uint courseId ) public payable returns (uint) {
       myPurchases[msg.sender].purchases.push(courseId);
       _transfer(msg.sender, _to, _value);
       return myPurchases[msg.sender].purchases.length;

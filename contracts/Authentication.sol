@@ -48,9 +48,4 @@ contract Authentication is Killable {
     return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image);
   }  
 
-  function addCourse(uint _index) public returns (bool success) {
-    users[msg.sender].course.push(_index);
-    return true;
-  }
-
 }

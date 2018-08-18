@@ -116,7 +116,7 @@ export function purchaseCourse(seller, amount, courseId) {
         token.deployed().then(function(tokenInstance) {
 
           tokenInstance.transfer(seller, amount, courseId, {from: coinbase}).then(function(result) {
-
+            console.log(result)
             ipfs.deployed().then(function(ipfsInstance) {
               ipfsInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
 

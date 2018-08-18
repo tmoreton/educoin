@@ -95,15 +95,13 @@ export function getPurchases() {
           var courses = []
           tokenInstance.getPurchaseCount({from: coinbase}).then(function(result) {
 
-            console.log(result.toNumber())
             for (var i = 0; i<result.toNumber(); i++) {
-              tokenInstance.getPurchaseString(i, {from: coinbase}).then(function(hash) {
 
+              tokenInstance.getPurchaseId(i, {from: coinbase}).then(function(hash) {
                 ipfsStorage.deployed().then(function(ipfsInstance) {
                   
                   ipfsInstance.getCourse(hash, {from: coinbase}).then(function(purchase) {
                     console.log(purchase)
-
                     var course = {
                       title: purchase[0],
                       description: purchase[1],
@@ -112,8 +110,9 @@ export function getPurchases() {
                       index: purchase[4]
                     }
                     courses.push(course);
+
                     dispatch(myPurchases(courses)); 
-                    
+
                   })
                 })
 

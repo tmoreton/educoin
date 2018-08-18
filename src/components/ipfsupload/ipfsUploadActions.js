@@ -74,31 +74,15 @@ export function getCourses(userId) {
             for (var i = 0; i<result.toNumber(); i++) {
               instance.getCourse(i, {from: coinbase}).then(function(hash) {
                 
-                // if(userId === null || userId === undefined){
-
-                  var course = {
-                    title: hash[0],
-                    description: hash[1],
-                    image: hash[2],
-                    userAddress: hash[3],
-                    index: hash[4]
-                  }
-                  courses.push(course);
-                  dispatch(showCourses(courses));   
-
-                // } else if (userId === hash[3]) {
-
-                //   var course = {
-                //     title: hash[0],
-                //     description: hash[1],
-                //     image: hash[2],
-                //     userAddress: hash[3],
-                //     index: hash[4]
-                //   }
-                //   courses.push(course);
-                //   dispatch(myCourses(courses)); 
-
-                // }
+                var course = {
+                  title: hash[0],
+                  description: hash[1],
+                  image: hash[2],
+                  userAddress: hash[3],
+                  index: hash[4]
+                }
+                courses.push(course);
+                dispatch(showCourses(courses));   
 
               })
             }
