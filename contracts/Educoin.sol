@@ -182,11 +182,6 @@ contract Educoin is Killable {
       return users[msg.sender].myPurchases.length;
   }
 
-  function signupTransfer() public payable returns (bool) {
-      _transfer(tx.origin, msg.sender, 100);
-      return true;
-  }
-
   /**
    * Transfer tokens from other address
    *
