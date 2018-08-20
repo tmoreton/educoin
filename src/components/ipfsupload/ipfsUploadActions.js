@@ -12,7 +12,7 @@ function showCourses(courses) {
   }
 }
 
-export function addCourse(title, description, image, video,) {
+export function addCourse(title, description, image, video, lessons) {
   let web3 = store.getState().web3.web3Instance
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
@@ -25,7 +25,7 @@ export function addCourse(title, description, image, video,) {
       web3.eth.getCoinbase((error, coinbase) => {
         educoin.deployed().then(function(educoinInstance) {
             
-          educoinInstance.addCourse(title, description, image, video, {from: coinbase})
+          educoinInstance.addCourse(title, description, image, video, lessons, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
             return browserHistory.push('/')

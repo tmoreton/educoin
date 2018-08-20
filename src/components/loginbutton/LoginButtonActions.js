@@ -100,6 +100,7 @@ export function purchaseCourse(seller, amount, courseId) {
                 description: course[1],
                 image: course[2],
                 video: course[3],
+                lessons: JSON.parse(course[6]),
               }
               dispatch(watchCourseFunction(course))
               return browserHistory.push('/course')
@@ -126,13 +127,14 @@ export function watchCourse(courseId) {
 
       web3.eth.getCoinbase((error, coinbase) => {
         educoin.deployed().then(function(educoinInstance) {
-          educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(hash) {
+          educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
 
             var course = {
-              title: hash[0],
-              description: hash[1],
-              image: hash[2],
-              video: hash[3],
+              title: course[0],
+              description: course[1],
+              image: course[2],
+              video: course[3],
+              lessons: JSON.parse(course[6]),
             }
             dispatch(watchCourseFunction(course))
             return browserHistory.push('/course')

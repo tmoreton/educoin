@@ -59,7 +59,7 @@ class ipfsUpload extends Component {
         this.state.description, 
         this.state.image, 
         this.state.video,
-        this.state.courses
+        JSON.stringify(this.state.courses)
       )
     )
   }
@@ -134,7 +134,7 @@ class ipfsUpload extends Component {
             </div> 
           </div>
         ))}
-        
+
         <button onClick={this.addClass.bind(this)}>Add Class</button>
         <button onClick={this.handleSubmit.bind(this)}>Submit</button>
 

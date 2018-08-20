@@ -46,6 +46,7 @@ contract Educoin is Killable {
     string image;
     string video;
     address userAddress;
+    string lessons;
   }
 
   Course[] public courses;
@@ -107,13 +108,14 @@ contract Educoin is Killable {
 
 
   // Course Function Calls
-  function addCourse(string _title, string _description, string _image, string _video) public returns(uint) {
+  function addCourse(string _title, string _description, string _image, string _video, string _lessons) public returns(uint) {
     courses.length++;
     courses[courses.length-1].title = _title;
     courses[courses.length-1].description = _description;
     courses[courses.length-1].image = _image;
     courses[courses.length-1].video = _video;
     courses[courses.length-1].userAddress = msg.sender;
+    courses[courses.length-1].lessons = _lessons;
     users[msg.sender].myCourses.push(courses.length-1);
     escrow.contractBalance -= 1000;
     users[msg.sender].balance += 1000;
@@ -124,12 +126,12 @@ contract Educoin is Killable {
     return courses.length;
   }
 
-  function getCourse(uint index) public constant returns( string, string, string, address, uint) {
+  function getCourse(uint index) public constant returns( string, string, string, address, uint ) {
     return ( courses[index].title, courses[index].description, courses[index].image, courses[index].userAddress, index );
   }
 
-  function watchCourse(uint index) public constant returns( string, string, string, string, address, uint) {
-    return ( courses[index].title, courses[index].description, courses[index].image, courses[index].video, courses[index].userAddress, index );
+  function watchCourse(uint index) public constant returns( string, string, string, string, address, uint, string) {
+    return ( courses[index].title, courses[index].description, courses[index].image, courses[index].video, courses[index].userAddress, index, courses[index].lessons );
   }
 
   function getPurchaseCount() public constant returns(uint length) {
