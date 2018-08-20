@@ -1,5 +1,4 @@
-import IpfsStorageContract from '../../../build/contracts/IpfsStorage.json'
-import Token from '../../../build/contracts/Token.json'
+import EducoinContract from '../../../build/contracts/Educoin.json'
 import store from '../../store'
 import ipfs from '../../util/ipfs';
 import { browserHistory } from 'react-router'
@@ -19,9 +18,8 @@ export function addCourse(title, description, image, video,) {
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      const ipfsStorage = contract(IpfsStorageContract)
-      ipfsStorage.setProvider(web3.currentProvider)
-
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -30,10 +28,9 @@ export function addCourse(title, description, image, video,) {
           console.error(error);
         }
 
-        ipfsStorage.deployed().then(function(instance) {
-          ipfsInstance = instance
+        educoin.deployed().then(function(educoinInstance) {
             
-          ipfsInstance.addCourse(title, description, image, video, {from: coinbase})
+          educoinInstance.addCourse(title, description, image, video, {from: coinbase})
           .then(function(result) {
             // If no error, login user.
             return browserHistory.push('/')
@@ -54,11 +51,8 @@ export function getCourses(userId) {
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      const ipfsStorage = contract(IpfsStorageContract)
-      ipfsStorage.setProvider(web3.currentProvider)
-
-      // Declaring this for later so we can chain functions on Authentication.
-      var ipfsInstance
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -67,12 +61,12 @@ export function getCourses(userId) {
           console.error(error);
         }
 
-        ipfsStorage.deployed().then(function(instance) {
+        educoin.deployed().then(function(educoinInstance) {
           
           var courses = []
-          instance.getCount({from: coinbase}).then(function(result) {
+          educoinInstance.getCount({from: coinbase}).then(function(result) {
             for (var i = 0; i<result.toNumber(); i++) {
-              instance.getCourse(i, {from: coinbase}).then(function(hash) {
+              educoinInstance.getCourse(i, {from: coinbase}).then(function(hash) {
                 
                 var course = {
                   title: hash[0],

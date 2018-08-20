@@ -1,6 +1,4 @@
-import AuthenticationContract from '../../../build/contracts/Authentication.json'
-import IpfsStorageContract from '../../../build/contracts/IpfsStorage.json'
-import TokenContract from '../../../build/contracts/Token.json'
+import EducoinContract from '../../../build/contracts/Educoin.json'
 import store from '../../store'
 
 const contract = require('truffle-contract')
@@ -34,12 +32,9 @@ export function updateUser(name) {
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      // Using truffle-contract we create the authentication object.
-      const authentication = contract(AuthenticationContract)
-      authentication.setProvider(web3.currentProvider)
 
-      // Declaring this for later so we can chain functions on Authentication.
-      var authenticationInstance
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -48,21 +43,18 @@ export function updateUser(name) {
           console.error(error);
         }
 
-        authentication.deployed().then(function(instance) {
-          authenticationInstance = instance
+        educoin.deployed().then(function(educoinInstance) {
 
-          // Attempt to login user.
-          authenticationInstance.update(name, {from: coinbase})
-          .then(function(result) {
-            // If no error, update user.
+          educoinInstance.update(name, {from: coinbase})
+            .then(function(result) {
 
-            dispatch(userUpdated({"name": name}))
+              dispatch(userUpdated({"name": name}))
+              return alert('Name updated!')
 
-            return alert('Name updated!')
-          })
-          .catch(function(result) {
-            // If error...
-          })
+            })
+            .catch(function(result) {
+              // If error...
+            })
         })
       })
     }
@@ -79,10 +71,9 @@ export function getPurchases() {
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      const token = contract(TokenContract)
-      token.setProvider(web3.currentProvider)
-      const ipfsStorage = contract(IpfsStorageContract)
-      ipfsStorage.setProvider(web3.currentProvider)
+      
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -90,18 +81,17 @@ export function getPurchases() {
           console.error(error);
         }
 
-        token.deployed().then(function(tokenInstance) {
+        educoin.deployed().then(function(educoinInstance) {
           
           var courses = []
-          tokenInstance.getPurchaseCount({from: coinbase}).then(function(result) {
+          educoinInstance.getPurchaseCount({from: coinbase}).then(function(result) {
 
             for (var i = 0; i<result.toNumber(); i++) {
 
-              tokenInstance.getPurchaseId(i, {from: coinbase}).then(function(hash) {
-                ipfsStorage.deployed().then(function(ipfsInstance) {
+              educoinInstance.getPurchaseId(i, {from: coinbase}).then(function(hash) {
                   
-                  ipfsInstance.getCourse(hash, {from: coinbase}).then(function(purchase) {
-                    console.log(purchase)
+                  educoinInstance.getCourse(hash, {from: coinbase}).then(function(purchase) {
+
                     var course = {
                       title: purchase[0],
                       description: purchase[1],
@@ -110,11 +100,9 @@ export function getPurchases() {
                       index: purchase[4]
                     }
                     courses.push(course);
-
                     dispatch(myPurchases(courses)); 
 
                   })
-                })
 
               })
             }
@@ -131,16 +119,13 @@ export function getPurchases() {
 
 export function getMyCourses(userId) {
   let web3 = store.getState().web3.web3Instance
-  console.log(userId)
+
   // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      const ipfsStorage = contract(IpfsStorageContract)
-      ipfsStorage.setProvider(web3.currentProvider)
-
-      // Declaring this for later so we can chain functions on Authentication.
-      var ipfsInstance
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -149,12 +134,13 @@ export function getMyCourses(userId) {
           console.error(error);
         }
 
-        ipfsStorage.deployed().then(function(instance) {
+        educoin.deployed().then(function(educoinInstance) {
           
           var courses = []
-          instance.getCount({from: coinbase}).then(function(result) {
+          educoinInstance.getCount({from: coinbase}).then(function(result) {
+
             for (var i = 0; i<result.toNumber(); i++) {
-              instance.getCourse(i, {from: coinbase}).then(function(hash) {
+              educoinInstance.getCourse(i, {from: coinbase}).then(function(hash) {
                 
                 if (userId === hash[3]) {
 

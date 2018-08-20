@@ -1,4 +1,4 @@
-import AuthenticationContract from '../../../build/contracts/Authentication.json'
+import EducoinContract from '../../../build/contracts/Educoin.json'
 import { loginUser } from '../loginbutton/LoginButtonActions'
 import store from '../../store'
 
@@ -11,12 +11,9 @@ export function signUpUser(name, about, image) {
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      // Using truffle-contract we create the authentication object.
-      const authentication = contract(AuthenticationContract)
-      authentication.setProvider(web3.currentProvider)
 
-      // Declaring this for later so we can chain functions on Authentication.
-      var authenticationInstance
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -25,16 +22,13 @@ export function signUpUser(name, about, image) {
           console.error(error);
         }
 
-        authentication.deployed().then(function(instance) {
-          authenticationInstance = instance
+        educoin.deployed().then(function(educoinInstance) {
 
-          // Attempt to sign up user.
-          authenticationInstance.signup(name, about, image, {from: coinbase})
-          .then(function(result) {
-            // If no error, login user.
+          educoinInstance.signup(name, about, image, {from: coinbase}).then(function(result) {
+
             return dispatch(loginUser())
-          })
-          .catch(function(result) {
+            
+          }).catch(function(result) {
             // If error...
           })
         })

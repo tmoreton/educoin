@@ -1,6 +1,4 @@
-import AuthenticationContract from '../../../build/contracts/Authentication.json'
-import TokenContract from '../../../build/contracts/Token.json'
-import IpfsContract from '../../../build/contracts/IpfsStorage.json'
+import EducoinContract from '../../../build/contracts/Educoin.json'
 import { browserHistory } from 'react-router'
 import store from '../../store'
 const contract = require('truffle-contract')
@@ -36,13 +34,8 @@ export function loginUser() {
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
-      // Using truffle-contract we create the authentication object.
-      const authentication = contract(AuthenticationContract)
-      authentication.setProvider(web3.currentProvider)
-
-      // Get Token Contract
-      const token = contract(TokenContract)
-      token.setProvider(web3.currentProvider)
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
@@ -51,28 +44,23 @@ export function loginUser() {
           console.error(error);
         }
 
-        authentication.deployed().then(function(instance) {
-          // Attempt to login user.
-          authInstance = instance
-          authInstance.login({from: coinbase}).then(function(userObject) {
-            
-            token.deployed().then(function(tokenInstance) {
-              tokenInstance.getBalance({from: coinbase}).then(function(result) {
-                console.log("logging in")
-                var user = {
-                  name: web3.toUtf8(userObject[0]),
-                  about: userObject[1],
-                  image: userObject[2],
-                  userAddress: userObject[3],
-                  courses: userObject[4],
-                  balance: result.toNumber(),
-                }
-                dispatch(userLoggedIn(user))
-                browserHistory.push('/profile')
-              })
-            })
+        educoin.deployed().then(function(educoinInstance) {
+          educoinInstance.login({from: coinbase}).then(function(userObject) {
+            console.log(userObject)
+
+            var user = {
+              name: web3.toUtf8(userObject[0]),
+              about: userObject[1],
+              image: userObject[2],
+              userAddress: userObject[3],
+              myCourses: userObject[4],
+              myPurchases: userObject[5],
+              balance: userObject[6].toNumber(),
+            }
+            dispatch(userLoggedIn(user))
+            browserHistory.push('/profile')
+
             // Used a manual redirect here as opposed to a wrapper.
-            // This way, once logged in a user can still access the home page.
             var currentLocation = browserHistory.getCurrentLocation()
 
             if ('redirect' in currentLocation.query){
@@ -101,35 +89,29 @@ export function purchaseCourse(seller, amount, courseId) {
 
     return function(dispatch) {
 
-      const token = contract(TokenContract)
-      token.setProvider(web3.currentProvider)
-
-      // Get Token Contract
-      const ipfs = contract(IpfsContract)
-      ipfs.setProvider(web3.currentProvider)
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       web3.eth.getCoinbase((error, coinbase) => {
         // Log errors, if any.
         if (error) {
           console.error(error);
         }
-        token.deployed().then(function(tokenInstance) {
+        educoin.deployed().then(function(educoinInstance) {
 
-          tokenInstance.transfer(seller, amount, courseId, {from: coinbase}).then(function(result) {
-            console.log(result)
-            ipfs.deployed().then(function(ipfsInstance) {
-              ipfsInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
+          educoinInstance.transfer(seller, amount, courseId, {from: coinbase}).then(function(result) {
 
-                var course = {
-                  title: course[0],
-                  description: course[1],
-                  image: course[2],
-                  video: course[3],
-                }
-                dispatch(watchCourseFunction(course))
+            educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
 
-                return browserHistory.push('/course')
-              })
+              var course = {
+                title: course[0],
+                description: course[1],
+                image: course[2],
+                video: course[3],
+              }
+              dispatch(watchCourseFunction(course))
+
+              return browserHistory.push('/course')
             })
 
           })
@@ -150,9 +132,8 @@ export function watchCourse(courseId) {
 
     return function(dispatch) {
 
-      // Get Token Contract
-      const ipfs = contract(IpfsContract)
-      ipfs.setProvider(web3.currentProvider)
+      const educoin = contract(EducoinContract)
+      educoin.setProvider(web3.currentProvider)
 
       web3.eth.getCoinbase((error, coinbase) => {
         // Log errors, if any.
@@ -160,8 +141,8 @@ export function watchCourse(courseId) {
           console.error(error);
         }
 
-        ipfs.deployed().then(function(ipfsInstance) {
-          ipfsInstance.watchCourse( courseId, {from: coinbase}).then(function(hash) {
+        educoin.deployed().then(function(educoinInstance) {
+          educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(hash) {
 
             var course = {
               title: hash[0],
