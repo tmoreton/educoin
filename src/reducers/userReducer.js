@@ -1,6 +1,5 @@
 const initialState = {
   data: null,
-  course: {},
   myPurchases: [],
   myCourses: []
 }
@@ -17,7 +16,6 @@ const userReducer = (state = initialState, action) => {
   {
     return Object.assign({}, state, {
       data: null,
-      course: {},
       myPurchases: [],
       myCourses: []
     })

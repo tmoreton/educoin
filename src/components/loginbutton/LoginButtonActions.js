@@ -46,7 +46,6 @@ export function loginUser() {
 
         educoin.deployed().then(function(educoinInstance) {
           educoinInstance.login({from: coinbase}).then(function(userObject) {
-            console.log(userObject)
 
             var user = {
               name: web3.toUtf8(userObject[0]),
@@ -76,8 +75,6 @@ export function loginUser() {
         })
       })
     }
-  } else {
-    console.error('Web3 is not initialized.');
   }
 }
 
@@ -93,14 +90,9 @@ export function purchaseCourse(seller, amount, courseId) {
       educoin.setProvider(web3.currentProvider)
 
       web3.eth.getCoinbase((error, coinbase) => {
-        // Log errors, if any.
-        if (error) {
-          console.error(error);
-        }
         educoin.deployed().then(function(educoinInstance) {
 
           educoinInstance.transfer(seller, amount, courseId, {from: coinbase}).then(function(result) {
-
             educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
 
               var course = {
@@ -110,17 +102,14 @@ export function purchaseCourse(seller, amount, courseId) {
                 video: course[3],
               }
               dispatch(watchCourseFunction(course))
-
               return browserHistory.push('/course')
-            })
 
+            })
           })
         
         })
       })
     }
-  } else {
-    console.error('Web3 is not initialized.');
   }
 }
 
@@ -136,11 +125,6 @@ export function watchCourse(courseId) {
       educoin.setProvider(web3.currentProvider)
 
       web3.eth.getCoinbase((error, coinbase) => {
-        // Log errors, if any.
-        if (error) {
-          console.error(error);
-        }
-
         educoin.deployed().then(function(educoinInstance) {
           educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(hash) {
 
@@ -151,14 +135,12 @@ export function watchCourse(courseId) {
               video: hash[3],
             }
             dispatch(watchCourseFunction(course))
-
             return browserHistory.push('/course')
+
           })
         })
 
       })
     }
-  } else {
-    console.error('Web3 is not initialized.');
   }
 }

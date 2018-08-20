@@ -23,11 +23,6 @@ export function addCourse(title, description, image, video,) {
 
       // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
-        // Log errors, if any.
-        if (error) {
-          console.error(error);
-        }
-
         educoin.deployed().then(function(educoinInstance) {
             
           educoinInstance.addCourse(title, description, image, video, {from: coinbase})
@@ -38,8 +33,6 @@ export function addCourse(title, description, image, video,) {
         })
       })
     }
-  } else {
-    console.error('Web3 is not initialized.');
   }
 }
 
@@ -54,13 +47,7 @@ export function getCourses(userId) {
       const educoin = contract(EducoinContract)
       educoin.setProvider(web3.currentProvider)
 
-      // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
-        // Log errors, if any.
-        if (error) {
-          console.error(error);
-        }
-
         educoin.deployed().then(function(educoinInstance) {
           
           var courses = []
@@ -86,7 +73,5 @@ export function getCourses(userId) {
         })
       })
     }
-  } else {
-    console.error('Web3 is not initialized.');
   }
 }

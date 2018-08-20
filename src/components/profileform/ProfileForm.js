@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { updateUser, getPurchases, getMyCourses } from './ProfileFormActions'
+import { updateUser, getMyPurchases, getMyCourses } from './ProfileFormActions'
 import { getCourses } from '../ipfsupload/ipfsUploadActions'
 import { getBalance, watchCourse } from '../loginbutton/LoginButtonActions'
 import ipfs from '../../util/ipfs';
@@ -19,9 +19,8 @@ class ProfileForm extends Component {
   }
 
   componentDidMount() {
-    console.log(this.props.user)
-    this.props.dispatch(getPurchases());
-    this.props.dispatch(getMyCourses(this.state.userAddress));
+    this.props.dispatch(getMyPurchases(this.props.user.data.myPurchases));
+    this.props.dispatch(getMyCourses(this.props.user.data.myCourses));
   }
 
   uploadImage = (event) => {

@@ -15,26 +15,16 @@ export function signUpUser(name, about, image) {
       const educoin = contract(EducoinContract)
       educoin.setProvider(web3.currentProvider)
 
-      // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
-        // Log errors, if any.
-        if (error) {
-          console.error(error);
-        }
-
         educoin.deployed().then(function(educoinInstance) {
-
           educoinInstance.signup(name, about, image, {from: coinbase}).then(function(result) {
 
             return dispatch(loginUser())
             
-          }).catch(function(result) {
-            // If error...
           })
         })
       })
+      
     }
-  } else {
-    console.error('Web3 is not initialized.');
   }
 }
