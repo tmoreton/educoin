@@ -15,20 +15,26 @@ import './styles.css'
 class App extends Component {
   render() {
     const OnlyAuthLinks = VisibleOnlyAuth(() =>
-      <div>
+      <div className="nav">
         <Link to="/upload">
-          <FontAwesomeIcon icon="upload" />
+          <FontAwesomeIcon size="2x" color="#03a87c" icon="upload" />
+        </Link>
+        <Link to="/">
+          <h1 className="site-title">EduCoin</h1>
         </Link>
         <Link to="/profile">
-          <FontAwesomeIcon icon="user" />
+          <FontAwesomeIcon size="2x" color="#03a87c" icon="user" />
         </Link>
       </div>
     )
 
     const OnlyGuestLinks = HiddenOnlyAuth(() =>
-      <div>
+      <div className="nav">
         <Link to="/signup">
-          <FontAwesomeIcon icon="upload" />
+          <FontAwesomeIcon size="2x" color="#03a87c" icon="upload" />
+        </Link>
+        <Link to="/">
+          <h1 className="site-title">EduCoin</h1>
         </Link>
         <LoginButton />
       </div>
@@ -36,8 +42,7 @@ class App extends Component {
 
     return (
       <div>
-        <nav className="flex center nav">
-          <Link to="/">EduCoin</Link>
+        <nav>
           <OnlyGuestLinks />
           <OnlyAuthLinks />
         </nav>

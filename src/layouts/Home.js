@@ -8,14 +8,13 @@ class Home extends Component {
 
   componentDidMount(){
     // Initialize web3 and set in Redux.
-    getWeb3
-      .then(results => {
-        console.log('Web3 initialized!')
-        this.props.dispatch(getCourses())
-      })
-      .catch(() => {
-        console.log('Error in web3 initialization.')
-      })
+    getWeb3.then(results => {
+      console.log('Web3 initialized!')
+      this.props.dispatch(getCourses())
+    })
+    .catch(() => {
+      console.log('Error in web3 initialization.')
+    })
   }
 
   buyButton() {
@@ -31,14 +30,15 @@ class Home extends Component {
   render() {
     return(
       <div>
-        <h1 className="text-center">Home</h1>
         <div className="flex center">
           {this.props.ipfs.courses.map(result => (
 
-            <div className="text-center">
+            <div className="course">
               <img role="presentation" src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
-              <h3>{result.title}</h3>
-              <p>{result.description}</p>
+              <div className="text-center">
+                <h4>{result.title}</h4>
+                <small>{result.description}</small>
+              </div>
               <button onClick={this.buyButton.bind({state: this, result: result})}>Buy Course</button>
             </div>
 

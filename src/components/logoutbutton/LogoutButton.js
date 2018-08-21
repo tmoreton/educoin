@@ -4,7 +4,9 @@ import { logoutUser } from './LogoutButtonActions'
 
 const LogoutButton = ({ onLogoutUserClick }) => {
   return(
-    <a href="#" onClick={(event) => onLogoutUserClick(event)}>Logout</a>
+    <a href="#" onClick={(event) => onLogoutUserClick(event)}>
+      <small>Logout</small>
+    </a>
   )
 }
 

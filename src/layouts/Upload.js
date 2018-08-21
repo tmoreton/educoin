@@ -5,7 +5,7 @@ class Upload extends Component {
   render() {
     return(
       <div>
-        <h1 className="text-center">Create Course</h1>
+        <h3 className="text-center">Create Course</h3>
         <div className="flex center">
           <IpfsUpload/>
         </div>

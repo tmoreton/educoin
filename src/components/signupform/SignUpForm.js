@@ -43,11 +43,11 @@ class SignUpForm extends Component {
 
   render() {
     return(
-      <form onSubmit={this.handleSubmit.bind(this)}>
+      <form  className="text-center" style={{ maxWidth: 450 }} onSubmit={this.handleSubmit.bind(this)}>
 
         <div>
           <label>Profile Pic</label>
-          <img role="presentation" src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
+          <img className="profile-img" role="presentation" src={'https://ipfs.io/ipfs/'+ this.state.image} />
           <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
         </div>
 
@@ -59,6 +59,7 @@ class SignUpForm extends Component {
         <div>
           <label>About Me</label>
           <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
+          <small>We have got your wallet information, simply input your name and your account is made!</small>
         </div>  
 
         <button type="submit">Sign Up</button>

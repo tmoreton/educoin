@@ -5,10 +5,10 @@ class SignUp extends Component {
   render() {
     return(
       <div>
-        <h1 className="text-center">Sign Up</h1>
+        <h3 className="text-center">Sign Up</h3>
+        <br/>
         <div className="flex center">
           <div>
-            <p>We have got your wallet information, simply input your name and your account is made!</p>
             <SignUpForm />
           </div>
         </div>

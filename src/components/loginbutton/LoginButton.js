@@ -16,7 +16,7 @@ class LoginButton extends Component {
   render(){
   	return (
   		<a href="#" onClick={(event) => this.onLoginUserClick(event)}>
-        <FontAwesomeIcon icon="user" />
+        <FontAwesomeIcon size="2x" icon="user" color="#03a87c" />
       </a>
   	)
   }
