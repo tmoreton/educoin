@@ -92,11 +92,11 @@ contract Educoin is Killable {
     return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image, users[msg.sender].userAddress, users[msg.sender].balance);
   }
 
-  function update(bytes32 _name, string _about, string _image) public payable onlyExistingUser returns (bytes32, string, string) {
+  function update(string _image, bytes32 _name, string _about ) public payable onlyExistingUser returns (bool) {
+    users[msg.sender].image = _image;
     users[msg.sender].name = _name;
     users[msg.sender].about = _about;
-    users[msg.sender].image = _image;
-    return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image);
+    return true;
   }  
 
 

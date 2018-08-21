@@ -25,7 +25,7 @@ function myCourses(courses) {
 }
 
 
-export function updateUser(name) {
+export function updateUser(image, name, about) {
   
   let web3 = store.getState().web3.web3Instance
 
@@ -38,10 +38,9 @@ export function updateUser(name) {
 
       web3.eth.getCoinbase((error, coinbase) => {
         educoin.deployed().then(function(educoinInstance) {
-          educoinInstance.update(name, {from: coinbase}).then(function(result) {
+          educoinInstance.update(image, name, about, {from: coinbase}).then(function(result) {
 
-            dispatch(userUpdated({"name": name}))
-            return alert('Name updated!')
+            alert('Successfully updated!')
 
           })
         })

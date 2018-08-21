@@ -47,7 +47,7 @@ class ProfileForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault()
-    this.props.dispatch(updateUser(this.state.name, this.state.about, this.state.image))
+    this.props.dispatch(updateUser(this.state.image, this.state.name, this.state.about ))
   }
 
   watchCourse(){
@@ -60,18 +60,24 @@ class ProfileForm extends Component {
 
         <form className="flex center" onSubmit={this.handleSubmit.bind(this)}>
           <div className="text-center" style={{ maxWidth: 550 }}>
+
             <img className="profile-img" role="presentation" src={'https://ipfs.io/ipfs/'+ this.state.image} />
             <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
+
             <label>Name</label>
             <input type="text" value={this.state.name} onChange={this.updateName} />
+
             <label>About</label>
             <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
+
             <label>Token Balance</label>
             <p>{this.state.balance} EDU</p>
             <br/>
+
             <label>Token Address</label>
             <small>{this.state.userAddress}</small>
             <br/>
+            
             <button type="submit">Update</button>
             <LogoutButton />
           </div>
