@@ -1,9 +1,7 @@
 import EducoinContract from '../../../build/contracts/Educoin.json'
 import store from '../../store'
-import ipfs from '../../util/ipfs';
 import { browserHistory } from 'react-router'
 const contract = require('truffle-contract')
-var ipfsInstance;
 
 function showCourses(courses) {
   return {

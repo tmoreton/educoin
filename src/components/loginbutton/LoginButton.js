@@ -7,9 +7,6 @@ import { faUser } from '@fortawesome/free-solid-svg-icons'
 library.add(faUser)
 
 class LoginButton extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   onLoginUserClick = (event) => {
     event.preventDefault();

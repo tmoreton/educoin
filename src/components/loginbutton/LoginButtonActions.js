@@ -3,9 +3,6 @@ import { browserHistory } from 'react-router'
 import store from '../../store'
 const contract = require('truffle-contract')
 
-var authInstance;
-var tokenInstance;
-
 function userLoggedIn(user) {
   return {
     type: 'USER_LOGGED_IN',
@@ -13,12 +10,6 @@ function userLoggedIn(user) {
   }
 }
 
-function userBalance(balance) {
-  return {
-    type: 'USER_BALANCE',
-    payload: balance
-  }
-}
 
 function watchCourseFunction(course) {
   return {
@@ -88,14 +79,14 @@ export function purchaseCourse(seller, amount, courseId) {
           educoinInstance.transfer(seller, amount, courseId, {from: coinbase}).then(function(result) {
             educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
 
-              var course = {
+              var newCourse = {
                 title: course[0],
                 description: course[1],
                 image: course[2],
                 video: course[3],
                 lessons: JSON.parse(course[6]),
               }
-              dispatch(watchCourseFunction(course))
+              dispatch(watchCourseFunction(newCourse))
               return browserHistory.push('/course')
 
             })
@@ -121,14 +112,14 @@ export function watchCourse(courseId) {
         educoin.deployed().then(function(educoinInstance) {
           educoinInstance.watchCourse( courseId, {from: coinbase}).then(function(course) {
 
-            var course = {
+            var newcCourse = {
               title: course[0],
               description: course[1],
               image: course[2],
               video: course[3],
               lessons: JSON.parse(course[6]),
             }
-            dispatch(watchCourseFunction(course))
+            dispatch(watchCourseFunction(newcCourse))
             return browserHistory.push('/course')
 
           })

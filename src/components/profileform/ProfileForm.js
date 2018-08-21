@@ -1,10 +1,8 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { updateUser, getMyPurchases, getMyCourses } from './ProfileFormActions'
-import { getCourses } from '../ipfsupload/ipfsUploadActions'
-import { getBalance, watchCourse } from '../loginbutton/LoginButtonActions'
+import { watchCourse } from '../loginbutton/LoginButtonActions'
 import ipfs from '../../util/ipfs';
-import { browserHistory } from 'react-router'
 
 class ProfileForm extends Component {
   constructor(props) {
@@ -61,7 +59,7 @@ class ProfileForm extends Component {
         <form className="flex center" onSubmit={this.handleSubmit.bind(this)}>
 
           <div>
-            <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
+            <img role="presentation" src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
             <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
             <input type="text" value={this.state.name} onChange={this.updateName} />
             <textarea type="text"  value={this.state.about} maxLength="200" onChange={this.updateAbout} />
@@ -77,7 +75,7 @@ class ProfileForm extends Component {
           {this.props.user.myPurchases.map(result => (
 
             <div className="text-center">
-              <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
+              <img role="presentation" src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
               <button onClick={this.watchCourse.bind({state: this, result: result})}>Watch</button>
@@ -90,7 +88,7 @@ class ProfileForm extends Component {
           {this.props.user.myCourses.map(result => (
 
             <div className="text-center">
-              <img src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
+              <img role="presentation" src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
               <h3>{result.title}</h3>
               <p>{result.description}</p>
               <button onClick={this.watchCourse.bind({state: this, result: result})}>Watch</button>

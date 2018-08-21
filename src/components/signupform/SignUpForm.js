@@ -47,7 +47,7 @@ class SignUpForm extends Component {
 
         <div>
           <label>Profile Pic</label>
-          <img src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
+          <img role="presentation" src={'https://ipfs.io/ipfs/'+ this.state.image} width="150" height="150" />
           <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
         </div>
 

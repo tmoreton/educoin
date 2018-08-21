@@ -2,10 +2,6 @@ import React, { Component } from 'react'
 import IpfsUpload from '../components/ipfsupload/ipfsUpload'
 
 class Upload extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return(
       <div>

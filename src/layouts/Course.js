@@ -2,15 +2,11 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 class Course extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return(
       <div className="flex center">
         <div>
-          <img src={'https://ipfs.io/ipfs/'+ this.props.course.image} width="320" height="240" />
+          <img role="presentation" src={'https://ipfs.io/ipfs/'+ this.props.course.image} width="320" height="240" />
           <h1>{this.props.course.title}</h1>
           <p>{this.props.course.description}</p>
           <h3>Intro</h3>

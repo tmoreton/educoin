@@ -3,10 +3,6 @@ import ProfileForm from '../components/profileform/ProfileForm'
 import LogoutButton from '../components/logoutbutton/LogoutButton'
 
 class Profile extends Component {
-  constructor(props) {
-    super(props)
-  }
-
   render() {
     return(
       <div className="flex center">
