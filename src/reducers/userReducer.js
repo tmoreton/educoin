@@ -1,7 +1,8 @@
 const initialState = {
   data: null,
   myPurchases: [],
-  myCourses: []
+  myCourses: [],
+  course: {},
 }
 
 const userReducer = (state = initialState, action) => {

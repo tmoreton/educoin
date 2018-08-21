@@ -11,9 +11,10 @@ class ipfsUpload extends Component {
       description: '',
       image: '',
       video: '',
-      courses: [{ title:'', video:'' }]
+      courses: []
     }
   }
+
 
   uploadImage = (event) => {
     event.preventDefault()
@@ -28,6 +29,7 @@ class ipfsUpload extends Component {
     }    
   };
 
+
   uploadVideo = (event) => {
     event.preventDefault()
     const file = event.target.files[0]
@@ -41,28 +43,18 @@ class ipfsUpload extends Component {
     }    
   };
 
+
   updateName = (event) => {
     event.preventDefault()
     this.setState({title: event.target.value})
   };
+
 
   updateDescription = (event) => {
     event.preventDefault()
     this.setState({description: event.target.value})
   };
 
-  handleSubmit(event) {
-    event.preventDefault()
-    this.props.dispatch(
-      addCourse(
-        this.state.title, 
-        this.state.description, 
-        this.state.image, 
-        this.state.video,
-        JSON.stringify(this.state.courses)
-      )
-    )
-  }
 
   updateCourseTitle(event) {
     event.preventDefault()
@@ -71,6 +63,7 @@ class ipfsUpload extends Component {
     courses[key].title = event.target.value
     this.self.setState({courses: courses})
   };
+
 
   uploadCourseVideo(event) {
     event.preventDefault()
@@ -89,11 +82,44 @@ class ipfsUpload extends Component {
     }    
   };
 
+
+  uploadFile(event) {
+    event.preventDefault()
+    var courses = this.self.state.courses
+    var key = parseInt(this.key)
+
+    const file = event.target.files[0]
+    let reader = new window.FileReader()
+    reader.readAsArrayBuffer(file)
+    reader.onloadend = () => {
+      const buffer = Buffer.from(reader.result);
+      ipfs.add(buffer, (err, ipfsHash) => {
+        courses[key].file = ipfsHash[0].hash
+        this.self.setState({ courses: courses })
+      })
+    }    
+  };
+
+
   addClass(){
     event.preventDefault()
     var courses = this.state.courses
     courses.push({ title:'', video:'' })
     this.setState({courses: courses})
+  }
+
+
+  handleSubmit(event) {
+    event.preventDefault()
+    this.props.dispatch(
+      addCourse(
+        this.state.title, 
+        this.state.description, 
+        this.state.image, 
+        this.state.video,
+        JSON.stringify(this.state.courses)
+      )
+    )
   }
 
   render() {
@@ -125,12 +151,16 @@ class ipfsUpload extends Component {
         {Object.keys(this.state.courses).map((key) => (
           <div>
             <div>
-              <label>Course Title</label>
-              <input type="text" value={this.state.courses[key].title} onChange={this.updateCourseTitle.bind({ self: this, key: key })} />
+              <label>{'Lesson ' + key}</label>
+              <input type="text" placeholder="Lesson Title Here" value={this.state.courses[key].title} onChange={this.updateCourseTitle.bind({ self: this, key: key })} />
             </div>  
             <div>
               <video src={'https://ipfs.io/ipfs/'+this.state.courses[key].video} width="320" height="240" controls />
               <input accept="video/mp4,video/x-m4v,video/*"  type="file" onChange={this.uploadCourseVideo.bind({ self: this, key: key })} />
+            </div>
+            <div>
+              <label>File Upload <small>(zip file)</small></label>
+              <input accept=".zip"  type="file" onChange={this.uploadFile.bind({ self: this, key: key })} />
             </div> 
           </div>
         ))}
