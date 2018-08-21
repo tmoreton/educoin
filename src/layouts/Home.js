@@ -8,7 +8,8 @@ class Home extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      showModal: false
+      showModal: false,
+      preview: ''
     };
   }
 
@@ -34,8 +35,10 @@ class Home extends Component {
   }
 
   showModal(){
-    console.log(this)
-    this.state.setState({showModal: true})
+    this.state.setState({
+      showModal: true,
+      preview: this.result.video
+    })
   }
 
   closeModal(){
@@ -47,7 +50,7 @@ class Home extends Component {
       return (
         <div className="modal">
           <div className="modal-content">
-            <video src="https://ipfs.io/ipfs/QmTE4WjjfJeoWNni9hTY2Y8yheMxuhfCqnzFiiZ9bLArJs" controls />
+            <video src={ "https://ipfs.io/ipfs/" + this.state.preview } controls />
             <button onClick={() => this.closeModal()}>Close</button>
           </div>
         </div>

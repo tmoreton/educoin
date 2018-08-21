@@ -373,7 +373,7 @@ section {
   flex-wrap: wrap;
   max-width: 450px;
   margin: 2rem;
-  height: 425px;
+  height: 400px;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
   align-content: space-between;
   background-color: #fff;

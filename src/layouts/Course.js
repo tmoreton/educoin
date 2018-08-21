@@ -16,8 +16,10 @@ class Course extends Component {
             <div>
               <hr/>
               <h4>{this.props.course.lessons[key].title}</h4>
-              <video src={'https://ipfs.io/ipfs/'+this.props.course.lessons[key].video} controls />
-              <a href={'https://ipfs.io/ipfs/'+this.props.course.lessons[key].file} download />
+              <video src={'https://ipfs.io/ipfs/' + this.props.course.lessons[key].video} controls />
+              <a href={'https://ipfs.io/ipfs/' + this.props.course.lessons[key].file} download >
+                <button>Lesson Files</button>
+              </a>
             </div>
           ))}
         </div>
