@@ -59,7 +59,7 @@ class ProfileForm extends Component {
       <div>
 
         <form className="flex center" onSubmit={this.handleSubmit.bind(this)}>
-          <div className="text-center" style={{ maxWidth: 450 }}>
+          <div className="text-center" style={{ maxWidth: 550 }}>
             <img className="profile-img" role="presentation" src={'https://ipfs.io/ipfs/'+ this.state.image} />
             <input accept="image/png, image/jpeg" type="file" onChange={this.uploadImage} />
             <label>Name</label>

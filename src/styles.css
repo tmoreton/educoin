@@ -76,6 +76,7 @@ textarea {
 img,
 video {
   width: 100%;
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
 }
 
 hr {
@@ -95,6 +96,7 @@ input[type='submit'] {
   height: 50px;
   border: none;
   margin-top: 10px;
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
 }
 
 .button:hover,
@@ -113,6 +115,7 @@ input[type='submit']:hover {
   height: 50px;
   border: none;
   margin-top: 10px;
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
 }
 
 .button-outline:hover {
@@ -126,7 +129,7 @@ input[type='password'],
 input[type='text'],
 textarea,
 select {
-  border: 1px solid rgba(0, 0, 0, .1);
+  border: none;
   box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
   height: 3.8rem;
   padding: .6rem 1.0rem;
@@ -380,6 +383,7 @@ section {
   width: 150px;
   height: 150px;
   border-radius: 150px;
+  box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
 }
 
 .site-title {

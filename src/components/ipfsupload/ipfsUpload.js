@@ -124,7 +124,7 @@ class ipfsUpload extends Component {
 
   render() {
     return(
-      <div>
+      <div  style={{ maxWidth: 550 }}>
         <div>
           <label>Course Title</label>
           <input type="text" onChange={this.updateName} />
