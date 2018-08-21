@@ -134,13 +134,6 @@ contract Educoin is Killable {
     return ( courses[index].title, courses[index].description, courses[index].image, courses[index].video, courses[index].userAddress, index, courses[index].lessons );
   }
 
-  function getPurchaseCount() public constant returns(uint length) {
-    return users[msg.sender].myPurchases.length;
-  }
-
-  function getPurchaseId(uint index) public constant returns(uint) {
-    return users[msg.sender].myPurchases[index];
-  }
 
 
 
@@ -266,5 +259,4 @@ contract Educoin is Killable {
       emit Burn(_from, _value);
       return true;
   }
-
 }

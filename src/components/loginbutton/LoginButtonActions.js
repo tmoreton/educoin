@@ -28,22 +28,16 @@ function watchCourseFunction(course) {
 }
 
 export function loginUser() {
+
   let web3 = store.getState().web3.web3Instance
 
-  // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
-
     return function(dispatch) {
+
       const educoin = contract(EducoinContract)
       educoin.setProvider(web3.currentProvider)
 
-      // Get current ethereum wallet.
       web3.eth.getCoinbase((error, coinbase) => {
-        // Log errors, if any.
-        if (error) {
-          console.error(error);
-        }
-
         educoin.deployed().then(function(educoinInstance) {
           educoinInstance.login({from: coinbase}).then(function(userObject) {
 
@@ -81,9 +75,8 @@ export function loginUser() {
 export function purchaseCourse(seller, amount, courseId) {
 
   let web3 = store.getState().web3.web3Instance
-  // Double-check web3's status.
-  if (typeof web3 !== 'undefined') {
 
+  if (typeof web3 !== 'undefined') {
     return function(dispatch) {
 
       const educoin = contract(EducoinContract)
@@ -117,9 +110,8 @@ export function purchaseCourse(seller, amount, courseId) {
 export function watchCourse(courseId) {
 
   let web3 = store.getState().web3.web3Instance
-  // Double-check web3's status.
-  if (typeof web3 !== 'undefined') {
 
+  if (typeof web3 !== 'undefined') {
     return function(dispatch) {
 
       const educoin = contract(EducoinContract)

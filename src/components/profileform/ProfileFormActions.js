@@ -26,9 +26,9 @@ function myCourses(courses) {
 
 
 export function updateUser(name) {
+  
   let web3 = store.getState().web3.web3Instance
 
-  // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
@@ -53,9 +53,9 @@ export function updateUser(name) {
 
 
 export function getMyPurchases(array) {
+
   let web3 = store.getState().web3.web3Instance
 
-  // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {

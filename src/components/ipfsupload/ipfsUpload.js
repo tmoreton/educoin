@@ -125,7 +125,6 @@ class ipfsUpload extends Component {
   render() {
     return(
       <div>
-
         <div>
           <label>Course Title</label>
           <input type="text" onChange={this.updateName} />
@@ -154,10 +153,12 @@ class ipfsUpload extends Component {
               <label>{'Lesson ' + key}</label>
               <input type="text" placeholder="Lesson Title Here" value={this.state.courses[key].title} onChange={this.updateCourseTitle.bind({ self: this, key: key })} />
             </div>  
+
             <div>
               <video src={'https://ipfs.io/ipfs/'+this.state.courses[key].video} width="320" height="240" controls />
               <input accept="video/mp4,video/x-m4v,video/*"  type="file" onChange={this.uploadCourseVideo.bind({ self: this, key: key })} />
             </div>
+
             <div>
               <label>File Upload <small>(zip file)</small></label>
               <input accept=".zip"  type="file" onChange={this.uploadFile.bind({ self: this, key: key })} />
@@ -167,7 +168,6 @@ class ipfsUpload extends Component {
 
         <button onClick={this.addClass.bind(this)}>Add Class</button>
         <button onClick={this.handleSubmit.bind(this)}>Submit</button>
-
       </div>
     )
   }

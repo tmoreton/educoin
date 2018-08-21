@@ -13,8 +13,9 @@ function showCourses(courses) {
 }
 
 export function addCourse(title, description, image, video, lessons) {
+
   let web3 = store.getState().web3.web3Instance
-  // Double-check web3's status.
+
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
@@ -38,9 +39,9 @@ export function addCourse(title, description, image, video, lessons) {
 
 
 export function getCourses(userId) {
+
   let web3 = store.getState().web3.web3Instance
 
-  // Double-check web3's status.
   if (typeof web3 !== 'undefined') {
 
     return function(dispatch) {
