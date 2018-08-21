@@ -5,6 +5,12 @@ import { purchaseCourse } from '../components/loginbutton/LoginButtonActions'
 import getWeb3 from '../util/getWeb3'
 
 class Home extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false
+    };
+  }
 
   componentDidMount(){
     // Initialize web3 and set in Redux.
@@ -27,23 +33,51 @@ class Home extends Component {
     )
   }
 
+  showModal(){
+    console.log(this)
+    this.state.setState({showModal: true})
+  }
+
+  closeModal(){
+    this.setState({showModal: false})
+  }
+
+  modal(){
+    if(this.state.showModal){
+      return (
+        <div className="modal">
+          <div className="modal-content">
+            <video src="https://ipfs.io/ipfs/QmTE4WjjfJeoWNni9hTY2Y8yheMxuhfCqnzFiiZ9bLArJs" controls />
+            <button onClick={() => this.closeModal()}>Close</button>
+          </div>
+        </div>
+      )
+    }
+  }
+
   render() {
     return(
       <div>
         <div className="flex center">
           {this.props.ipfs.courses.map(result => (
-
-            <div className="course">
-              <img role="presentation" src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
-              <div className="text-center">
-                <h4>{result.title}</h4>
-                <small>{result.description}</small>
+            <div>
+              <div className="course">
+                <img role="presentation" src={'https://ipfs.io/ipfs/'+ result.image} width="320" height="240" />
+                <div className="text-center">
+                  <h4>{result.title}</h4>
+                  <small>{result.description}</small>
+                  <br/>
+                  
+                </div>
+                <button onClick={this.buyButton.bind({state: this, result: result})}>Buy Course</button>
               </div>
-              <button onClick={this.buyButton.bind({state: this, result: result})}>Buy Course</button>
+              <small className="text-center" onClick={this.showModal.bind({state: this, result: result})}>Preview</small>
             </div>
-
           ))}
         </div>
+
+        {this.modal()}
+
       </div>
     )
   }

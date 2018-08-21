@@ -53,13 +53,14 @@ export function getCourses(userId) {
           educoinInstance.getCount({from: coinbase}).then(function(result) {
             for (var i = 0; i<result.toNumber(); i++) {
               educoinInstance.getCourse(i, {from: coinbase}).then(function(hash) {
-                
+                console.log(hash)
                 var course = {
                   title: hash[0],
                   description: hash[1],
                   image: hash[2],
                   userAddress: hash[3],
-                  index: hash[4]
+                  index: hash[4],
+                  video: hash[5]
                 }
                 courses.push(course);
                 dispatch(showCourses(courses));   

@@ -13,7 +13,6 @@ contract Educoin is Killable {
   
   /**
    * Constructor function
-   *
    * Initializes contract with initial supply tokens to the creator of the contract
    */
   constructor() public {
@@ -126,8 +125,8 @@ contract Educoin is Killable {
     return courses.length;
   }
 
-  function getCourse(uint index) public constant returns( string, string, string, address, uint ) {
-    return ( courses[index].title, courses[index].description, courses[index].image, courses[index].userAddress, index );
+  function getCourse(uint index) public constant returns( string, string, string, address, uint, string) {
+    return ( courses[index].title, courses[index].description, courses[index].image, courses[index].userAddress, index, courses[index].video);
   }
 
   function watchCourse(uint index) public constant returns( string, string, string, string, address, uint, string) {
