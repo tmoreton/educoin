@@ -9,26 +9,29 @@ contract Educoin is Killable {
   string public symbol;
   uint8 public decimals = 18;
   uint256 public totalSupply;   // 18 decimals is the strongly suggested default, avoid changing it
-  uint private id; // Stores user id temporarily
+  uint private id;              // Stores user id temporarily
   
   /**
    * Constructor function
    * Initializes contract with initial supply tokens to the creator of the contract
    */
   constructor() public {
-    totalSupply = 21000000000;              // Update total supply with the decimal amount
-    users[msg.sender].balance = 2100000000;    // Give the creator all initial tokens
-    name = 'EduCoin';                       // Set the name for display purposes
-    symbol = 'EDU';                         // Set the symbol for display purposes
-    escrow.contractAddress = address(this);
+    totalSupply = 21000000000;                // Update total supply with the decimal amount
+    users[msg.sender].balance = 2100000000;   // Give the creator all initial tokens
+    name = 'EduCoin';                         // Set the name for display purposes
+    symbol = 'EDU';                           // Set the symbol for display purposes
+    escrow.contractAddress = address(this);   // Assign 90% of the total supply of tokens to the contract address
     escrow.contractBalance = 18900000000;
   }
 
+
+  //Escrow function to reward users for contributing to the platform
   struct Escrow {
     address contractAddress;
     uint256 contractBalance;
   }
 
+  //Define a user
   struct User {
     bytes32 name;
     string about;
@@ -39,13 +42,14 @@ contract Educoin is Killable {
     uint256 balance;
   }
 
+  //Define the variables required in course creation
   struct Course {
     string title;
     string description;
     string image;
     string video;
-    address userAddress;
-    string lessons;
+    address userAddress;  // store the given ETH address for a reward on course and user creation
+    string lessons;       //store the JSON.parse/JSON.strinfify of videos and download files
   }
 
   Course[] public courses;
@@ -81,12 +85,14 @@ contract Educoin is Killable {
   }
 
   // Right now a user can keep signing up for freee tokens, need to check if user already exists
-
   function signup(bytes32 _name, string _about, string _image) public payable returns (bytes32, string, string, address, uint256) {
     users[msg.sender].name = _name;
     users[msg.sender].about = _about;
     users[msg.sender].image = _image;
     users[msg.sender].userAddress = msg.sender;
+
+    // Reward user with 100 tokens, enough for one course to reward for signup
+    //Need to add restrictions on only getting 100 tokens and not signup mutliple times
     escrow.contractBalance -= 100;
     users[msg.sender].balance += 100;
     return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image, users[msg.sender].userAddress, users[msg.sender].balance);
@@ -99,7 +105,10 @@ contract Educoin is Killable {
     return true;
   }  
 
-
+  function getBalance(address _userAddress) constant public returns (uint256) {
+    // return the balance of a given user
+    return (users[_userAddress].balance);
+  }
 
 
 
@@ -108,7 +117,10 @@ contract Educoin is Killable {
 
   // Course Function Calls
   function addCourse(string _title, string _description, string _image, string _video, string _lessons) public returns(uint) {
+    // Increment course counter to reference later in course array
     courses.length++;
+
+    // Set input values for course
     courses[courses.length-1].title = _title;
     courses[courses.length-1].description = _description;
     courses[courses.length-1].image = _image;
@@ -116,20 +128,26 @@ contract Educoin is Killable {
     courses[courses.length-1].userAddress = msg.sender;
     courses[courses.length-1].lessons = _lessons;
     users[msg.sender].myCourses.push(courses.length-1);
+
+    //Reward user with 1000 tokens for contributing to the platform
+    //Need to add apporval process for only allowing quality content
     escrow.contractBalance -= 1000;
     users[msg.sender].balance += 1000;
     return courses.length;
   }
 
   function getCount() public constant returns(uint) {
+    // Get the course count to loop through courses for homepage
     return courses.length;
   }
 
   function getCourse(uint index) public constant returns( string, string, string, address, uint, string) {
+    //returns all values except lessons user needs to purchase course to view lessons
     return ( courses[index].title, courses[index].description, courses[index].image, courses[index].userAddress, index, courses[index].video);
   }
 
   function watchCourse(uint index) public constant returns( string, string, string, string, address, uint, string) {
+    //Same as getCourse but returns the lesson plan
     return ( courses[index].title, courses[index].description, courses[index].image, courses[index].video, courses[index].userAddress, index, courses[index].lessons );
   }
 
