@@ -93,6 +93,7 @@ contract Educoin is Killable {
 
     // Reward user with 100 tokens, enough for one course to reward for signup
     //Need to add restrictions on only getting 100 tokens and not signup mutliple times
+    require(escrow.contractBalance >= 100);
     escrow.contractBalance -= 100;
     users[msg.sender].balance += 100;
     return (users[msg.sender].name, users[msg.sender].about, users[msg.sender].image, users[msg.sender].userAddress, users[msg.sender].balance);
@@ -131,7 +132,9 @@ contract Educoin is Killable {
 
     //Reward user with 1000 tokens for contributing to the platform
     //Need to add apporval process for only allowing quality content
+    require(escrow.contractBalance >= 1000);
     escrow.contractBalance -= 1000;
+
     users[msg.sender].balance += 1000;
     return courses.length;
   }
