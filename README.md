@@ -2,9 +2,9 @@
 
 ## Try It Out on Ropsten
 
-https://educoin.herokuapp.com/
+![Educoin DAPP](https://educoin.herokuapp.com/)
 
-![Educoin Test Gif](https://ipfs.io/ipfs/QmWEcVkZY2UUv2huSmMFj4Ep91VWX5SPNgXCUyp1k8tPqT)
+[![Test Video](https://img.youtube.com/vi/mbeoibOt0eg/0.jpg)](https://www.youtube.com/watch?v=mbeoibOt0eg)
 
 ## A decentralized course platform built for the content creators
 
