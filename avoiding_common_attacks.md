@@ -53,3 +53,4 @@ Given that there are quite a few ways for users to easily get free tokens I impl
 * Need to require certain fields to be filled in on user signup and course creation
 * Need to add an approval process so that high quality content is uploaded to the site (maybe a group vote on vertain courses
 * Need to add refund if said course is not what is expected
+* Need to restrict the file types on upload from server along with HTML
