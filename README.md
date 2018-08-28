@@ -2,7 +2,7 @@
 
 ## Try It Out on Ropsten
 
-![Educoin DAPP](https://educoin.herokuapp.com/)
+https://educoin.herokuapp.com/
 
 [![Test Video](https://img.youtube.com/vi/mbeoibOt0eg/0.jpg)](https://www.youtube.com/watch?v=mbeoibOt0eg)
 
